@@ -9,6 +9,25 @@
 #include "corewar.h"
 #include "option_asm.h"
 
+typedef struct struct_header {
+    int magic;
+    char name[128];
+    int prog_size;
+    char comment[2048];
+} __attribute__ ((packed));
+
+int print_name_in_128(int fd)
+{
+    struct struct_header header = {
+        .magic = 15369203,
+        .name = "zork",
+        .prog_size = 23,
+        .comment = "just a basic living program"
+    };
+    write(fd, &header, sizeof(header));
+    return (0);
+}
+
 // int handle_options(int fd, char **cols)
 // {
 //     int return_value = 0;
@@ -30,24 +49,26 @@ int write_aff(int fd)
     return (0);
 }
 
-// int print_in_char(int fd, char c)
-// {
-//     write(fd, &c, 1);
-//     return (0);
-// }
+int print_in_char(int fd, char c)
+{
+    write(fd, &c, 1);
+    return (0);
+}
 
-char **init_struct(header_t *header, char *path, int count, char **array)
+char **init_struct(char *path)
 {
     char *str = NULL;
     size_t size = 0;
     FILE *fd = fopen(path, "r");
     char *buffer = malloc(sizeof(char) * 500);
-    ssize_t size_str = 0;
-
     buffer[0] = '\0';
+    ssize_t size_str = 0;
+    int count = 0;
+    header_t *header = malloc(sizeof(header_t));
+
     while ((size_str = getline(&str, &size, fd)) > 0) {
         str[size_str - 1] = '\0';
-        array = str_to_word(str, '"');
+        char **array = str_to_word(str, '"');
         if (count == 0)
             header->name = array[2];
         if (count == 1)
@@ -58,22 +79,25 @@ char **init_struct(header_t *header, char *path, int count, char **array)
     }
     header->magic = 15369203;
     header->prog_size = 23;
-    array = str_to_word(buffer, ' ');
+    char **array = str_to_word(buffer, ' ');
+    // for (int i = 0; array[i] != NULL; i++) {
+    //     printf("array[%d] = [%s]\n", i, array[i]);
+    // }
+    //write(fd, &header, sizeof(header));
     return (array);
 }
 
 int yolotron_asm(char *path, char **av)
 {
-    header_t *header = malloc(sizeof(header_t));
-    char **array = NULL;
-
-    array = init_struct(header, path, 0, array);
-    int fd = open(av[2], O_CREAT | O_RDWR, S_IRUSR | S_IRGRP | S_IROTH);
-    printf("%s\n", header->name);
-    printf("%s\n", header->comment);
-    printf("%d\n", header->magic);
-    printf("%d\n", header->prog_size);
-    write(fd, &header, sizeof(header));
-    // write_champion(header, array);
+    char **array = init_struct(path);
+    // rows = my_str_to_word_array(buffer, '\n');
+    // for (int i = 0; rows[i]; i++) {
+    //     cols = my_str_to_word_array(rows[i], ' ');
+    //     print_name_in_128(fd);
+    //     print_in_char(fd, 11); // sti
+    //     print_in_char(fd, 1); // registre
+    //     print_in_char(fd, 1); // registre
+    //     print_in_char(fd, 6); // AND//
+    // }
     return (0);
 }
