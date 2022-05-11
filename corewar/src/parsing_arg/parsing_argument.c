@@ -27,7 +27,7 @@ int initialize_option(champion_t *champion, int ac, char **av, int i)
 {
     champion->file_name = my_strdup(av[i]);
     champion->prog_nbr = 0;
-    champion->adress = NULL;
+    champion->adress = -1;
     champion->is_valid = -1;
     int fd = open(av[i], O_RDONLY);
     if (fd == -1) {
@@ -36,7 +36,8 @@ int initialize_option(champion_t *champion, int ac, char **av, int i)
     }
     if (get_prog_nbr(champion, ac, av, i) == 84)
         return 84;
-    get_champ_adress(champion, av, i);
+    if (get_champ_adress(champion, av, i) == 84)
+        return 84;
     champion->is_valid = 1;
     close(fd);
     return 0;
@@ -79,14 +80,18 @@ champion_t *parsing_argument(int ac, char **av, corewar_t *corewar)
         }
         set_dump_nbr(corewar, av, i);
     }
-    // for (int i = 0; i < nbr_champion; i++) {
-    //     printf("%s\n", champion[i].file_name);
-    //     printf("%i\n", champion[i].prog_nbr);
-    //     printf("name %s\n", champion[i].file_name);
-    //     printf("number %i\n", champion[i].prog_nbr);
-    //     printf("adress %s\n", champion[i].adress);
-    //     printf("valid ? : %i\n", champion[i].is_valid);
-    //     printf("val de dump_nbr ? : %i\n", corewar->nbr_dump);
-    // }
+    if (set_random_number_adress(corewar, champion) == 84) {
+        free_struct(*corewar, champion);
+        return NULL;
+    }
+    for (int i = 0; i < nbr_champion; i++) {
+        printf("%s\n", champion[i].file_name);
+        printf("%i\n", champion[i].prog_nbr);
+        printf("name %s\n", champion[i].file_name);
+        printf("number %i\n", champion[i].prog_nbr);
+        printf("adress %i\n", champion[i].adress);
+        printf("valid ? : %i\n", champion[i].is_valid);
+        printf("val de dump_nbr ? : %i\n", corewar->nbr_dump);
+    }
     return champion;
 }
