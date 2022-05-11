@@ -53,7 +53,7 @@ clean:
 	@echo -e "\e[35m----- COREWAR CLEANED -----\033[0m"
 
 fclean: clean
-	# $(MAKE) -C lib/my fclean
+	$(MAKE) -C lib/my fclean
 	$(RM) $(NAME)
 	$(RM) $(NAME_CRI)
 	$(RM) -r $(NAME_DIR)
