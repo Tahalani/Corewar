@@ -8,7 +8,7 @@
 #include <criterion/criterion.h>
 #include <criterion/redirect.h>
 #include "my.h"
-#include "projet.h"
+#include "corewar.h"
 
 void redirect_all_stdout(void)
 {
