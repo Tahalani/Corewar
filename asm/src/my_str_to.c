@@ -43,7 +43,7 @@ char **str_to_word(char const *str, char separator)
     char **tab = NULL;
     int i = 0;
     int size = 0;
-    int count = count_word(str, separator) + 1;
+    int count = count_word(str, separator);
 
     tab = malloc(sizeof(char *) * (count + 1));
     tab[count] = NULL;

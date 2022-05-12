@@ -48,7 +48,7 @@ char **init_struct(header_t *header, char *path, int count, char **array)
 
     buffer[0] = '\0';
     while ((size_str = getline(&str, &size, fd)) > 0) {
-        str[size_str - 1] = '\0';
+        str[size_str] = '\0';
         array = str_to_word(str, '"');
         if (count == 0) {
             memset(header->prog_name, 0, PROG_NAME_LENGTH);
