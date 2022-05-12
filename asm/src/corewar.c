@@ -30,55 +30,26 @@ int handle_options(int fd, char *array)
     return (return_value);
 }
 
-int write_aff(int fd)
+int write_name_comment(header_t header, char *file)
 {
-    char c = 10;
+    int fd = open(file, O_CREAT | O_RDWR, S_IRUSR | S_IRGRP | S_IROTH);
 
-    write(fd, &c, 1);
+    if (fd == -1)
+        return (-1);
+    write(fd, &header, sizeof(header_t));
     return (0);
-}
-
-char **init_struct(header_t *header, char *path, int count, char **array)
-{
-    char *str = NULL;
-    size_t size = 0;
-    FILE *fd = fopen(path, "r");
-    char *buffer = malloc(sizeof(char) * 500);
-    ssize_t size_str = 0;
-
-    buffer[0] = '\0';
-    while ((size_str = getline(&str, &size, fd)) > 0) {
-        str[size_str] = '\0';
-        array = str_to_word(str, '"');
-        if (count == 0) {
-            memset(header->prog_name, 0, PROG_NAME_LENGTH);
-            strcpy(header->prog_name, array[1]);
-        }
-        if (count == 1) {
-            memset(header->comment, 0, COMMENT_LENGTH);
-            strcpy(header->comment, array[1]);
-        }
-        if (count > 2)
-            strcat(buffer, str);
-        count++;
-    }
-    header->magic = COREWAR_EXEC_MAGIC;
-    header->prog_size = 23;
-    array = str_to_word(buffer, ' ');
-    return (array);
 }
 
 int yolotron_asm(char *path, char **av)
 {
-    header_t header;
+    header_t *header = malloc(sizeof(header_t));
     char **array = NULL;
-    int fd = 0;
 
-    array = init_struct(&header, path, 0, array);
-    fd = open(av[2], O_CREAT | O_RDWR, S_IRUSR | S_IRGRP | S_IROTH);
-    if (fd == -1)
+    // if (init_struct(header, path, 0, array) == NULL)
+    //     return (-1);
+    array = init_struct(header, path, 0, array);
+    if (write_name_comment(*header, av[2]) == -1)
         return (-1);
-    write(fd, &header, sizeof(header_t));
-    write_sti(fd);
+    // write_sti(fd);
     return (0);
 }

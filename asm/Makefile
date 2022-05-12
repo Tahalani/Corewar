@@ -11,16 +11,16 @@ EXTENSION	=		.c
 
 SRC			=		$(addsuffix .c, $(addprefix src/,	\
 					corewar									\
-					asm										\
 					write_instruction						\
 					write_instruction2						\
 					write_instruction3						\
+					write_instruction4						\
+					init_struct								\
 					my_str_to								\
 					main))									\
 
 SRCT		=		tests/tests_projet$(EXTENSION)			\
 					$(addsuffix .c, $(addprefix src/,		\
-					asm										\
 					cesar))									\
 
 OBJ			=		$(SRC:$(EXTENSION)=.o)

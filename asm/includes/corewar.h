@@ -15,6 +15,7 @@
     #include <sys/stat.h>
     #include <fcntl.h>
     #include <string.h>
+    #include "op.h"
 
 int write_wome_text(void);
 
@@ -23,16 +24,6 @@ int write_a_number_as_int(void);
 int without_padding(void);
 
 int with_padding(void);
-
-int print_add(int fd, char **cols);
-
-int print_sub(int fd, char **cols);
-
-int print_mul(int fd, char **cols);
-
-int print_put(int fd, char **cols);
-
-int print_name(int fd, char **cols);
 
 char **str_to_word(char const *str, char separator);
 
@@ -54,6 +45,8 @@ int write_sub(int fd);
 
 int write_and(int fd);
 
+int write_aff(int fd);
+
 int write_or(int fd);
 
 int write_xor(int fd);
@@ -73,5 +66,7 @@ int write_lldi(int fd);
 int write_lfork(int fd);
 
 int write_aff(int fd);
+
+char **init_struct(header_t *header, char *path, int count, char **array);
 
 #endif/* !PROJET_H_ */
