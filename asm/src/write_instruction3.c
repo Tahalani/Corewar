@@ -7,7 +7,6 @@
 
 #include "my.h"
 #include "corewar.h"
-#include "option_asm.h"
 
 int write_sti(int fd)
 {
