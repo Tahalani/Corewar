@@ -74,13 +74,21 @@ int yolotron_asm(char *path, char **av)
     header_t *header = malloc(sizeof(header_t));
     char **array = NULL;
 
+    // header->name = malloc(sizeof(char) * 128);
+    // header->comment = malloc(sizeof(char) * 2048);
     array = init_struct(header, path, 0, array);
     int fd = open(av[2], O_CREAT | O_RDWR, S_IRUSR | S_IRGRP | S_IROTH);
-    printf("%s\n", header->name);
-    printf("%s\n", header->comment);
-    printf("%d\n", header->magic);
-    printf("%d\n", header->prog_size);
-    write(fd, &header, sizeof(header));
+    struct struct_header st_header = {
+        .magic = header->magic,
+        .name = header->name,
+        .prog_size = header->prog_size,
+        .comment = header->comment
+    };
+    printf("%s\n", st_header.name);
+    printf("%s\n", st_header.comment);
+    printf("%d\n", st_header.magic);
+    printf("%d\n", st_header.prog_size);
+    write(fd, &st_header, sizeof(st_header));
     // write_champion(header, array);
     return (0);
 }
