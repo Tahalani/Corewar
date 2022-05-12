@@ -44,7 +44,7 @@ int print_name(int fd, char **cols);
 
 char **str_to_word(char const *str, char separator);
 
-int handle_options(int fd, char **cols);
+int handle_options(int fd, char *array);
 
 int yolotron(char *path);
 

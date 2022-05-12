@@ -16,18 +16,18 @@ typedef struct struct_header {
     char comment[2048];
 } __attribute__ ((packed));
 
-// int handle_options(int fd, char **cols)
-// {
-//     int return_value = 0;
+int handle_options(int fd, char *array)
+{
+    int return_value = 0;
 
-//     for (int count = 0; count != 4; count++) {
-//         if (strcmp(cols[0], OPT_ARRAY[count]) == 0) {
-//             return_value = (*OPT_FUNC[count]) (fd, cols);
-//             break;
-//         }
-//     }
-//     return (return_value);
-// }
+    for (int count = 0; count != 4; count++) {
+        if (strcmp(array, OPT_ARRAY[count]) == 0) {
+            return_value = (*OPT_FUNC[count]) (fd);
+            return (2);
+        }
+    }
+    return (return_value);
+}
 
 int write_aff(int fd)
 {
@@ -87,7 +87,7 @@ int yolotron_asm(char *path, char **av)
         st_header.name[i] = header->name[i];
     for (int i = 0; i < 2048; i++)
         st_header.comment[i] = header->comment[i];
-    if (write(fd, &st_header, sizeof(st_header)) == -1)
-        return (-1);
+    write(fd, &st_header, sizeof(st_header));
+    write_sti(fd);
     return (0);
 }

@@ -11,7 +11,7 @@
 
 int write_sti(int fd)
 {
-    char c = 'b';
+    char c = 11;
 
     write(fd, &c, 1);
     return (0);
