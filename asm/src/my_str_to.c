@@ -11,7 +11,7 @@
 
 int verif_char(char x, char separator)
 {
-    if (x == separator || x == '\t')
+    if (x == separator)
         return 0;
     return 1;
 }
@@ -33,7 +33,7 @@ int size_word(char const *str, int i, char separator)
 {
     int count = 0;
 
-    for (; str[i] != separator && str[i] != '\t' && str[i] != '\0'; i++)
+    for (; str[i] != separator && str[i] != '\0'; i++)
         count++;
     return (count);
 }
