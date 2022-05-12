@@ -16,6 +16,7 @@ SRC			=		$(addsuffix .c, $(addprefix src/,	\
 					write_instruction3						\
 					write_instruction4						\
 					init_struct								\
+					str_to_word_instruction					\
 					my_str_to								\
 					main))									\
 
