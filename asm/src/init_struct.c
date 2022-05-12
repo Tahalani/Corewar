@@ -51,6 +51,6 @@ char **init_struct(header_t *header, char *path, int count, char **array)
             strcat(str, buffer);
         count++;
     }
-    init_instruction(header, str, array);
+    array = init_instruction(header, str, array);
     return (array);
 }

@@ -17,12 +17,14 @@ typedef struct struct_header {
     char comment[2048];
 } __attribute__ ((packed));
 
-int handle_options(int fd, char *array)
+int handle_options(int fd, char *target)
 {
     int return_value = 0;
 
-    for (int count = 0; count != 4; count++) {
-        if (strcmp(array, OPT_ARRAY[count]) == 0) {
+    for (int count = 0; count != 16; count++) {
+        // printf("TARGET: [%s]\n", target);
+        if (strcmp(target, OPT_ARRAY[count]) == 0) {
+            // printf("--------INSIDE--------\n");
             return_value = (*OPT_FUNC[count]) (fd);
             return (2);
         }
@@ -37,19 +39,22 @@ int write_name_comment(header_t header, char *file)
     if (fd == -1)
         return (-1);
     write(fd, &header, sizeof(header_t));
-    return (0);
+    return (fd);
 }
 
 int yolotron_asm(char *path, char **av)
 {
     header_t *header = malloc(sizeof(header_t));
     char **array = NULL;
+    int fd = 0;
 
-    // if (init_struct(header, path, 0, array) == NULL)
-    //     return (-1);
-    array = init_struct(header, path, 0, array);
-    if (write_name_comment(*header, av[2]) == -1)
+    if ((array = init_struct(header, path, 0, array)) == NULL)
         return (-1);
-    // write_sti(fd);
+    if ((fd = write_name_comment(*header, av[2])) == -1)
+        return (-1);
+    // for (int i =0 ; array[i]; ++i)
+    //     printf("%s\n", array[i]);
+    for (unsigned int i = 0; array[i] != NULL; i++)
+        handle_options(fd, array[i]);
     return (0);
 }
