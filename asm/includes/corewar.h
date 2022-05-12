@@ -16,14 +16,6 @@
     #include <fcntl.h>
     #include <string.h>
 
-
-typedef struct header_s {
-    int magic;
-    char *name;
-    int prog_size;
-    char *comment;
-} header_t;
-
 int write_wome_text(void);
 
 int write_a_number_as_int(void);
