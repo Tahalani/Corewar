@@ -9,11 +9,12 @@ EXT_CRI		=		*.gcno *.gcda
 
 EXTENSION	=		.c
 
-SRC			=		$(addsuffix .c, $(addprefix src/,	\
-					parsing_arg/get_adress_champion	\
-					parsing_arg/get_prog_number	\
-					parsing_arg/parsing_argument\
-					main))									\
+SRC			=		$(addsuffix .c, $(addprefix src/,			\
+					parsing_arg/get_adress_champion				\
+					parsing_arg/get_prog_number					\
+					parsing_arg/parsing_argument				\
+					parsing_arg/set_random_adress_and_number	\
+					main))										\
 
 
 OBJ			=		$(SRC:$(EXTENSION)=.o)
@@ -52,7 +53,7 @@ clean:
 	@echo -e "\e[35m----- COREWAR CLEANED -----\033[0m"
 
 fclean: clean
-	# $(MAKE) -C lib/my fclean
+	$(MAKE) -C lib/my fclean
 	$(RM) $(NAME)
 	$(RM) $(NAME_CRI)
 	$(RM) -r $(NAME_DIR)

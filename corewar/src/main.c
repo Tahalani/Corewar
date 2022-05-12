@@ -11,10 +11,8 @@ void free_struct(corewar_t corewar, champion_t *champion)
 {
     for (int i = 0; i < corewar.nbr_champ; i++){
         free(champion[i].file_name);
-        free(champion[i].adress);
     }
     free(champion);
-    
 }
 
 int main(int ac, char **av)
@@ -25,7 +23,6 @@ int main(int ac, char **av)
         return 84;
     champion = parsing_argument(ac, av, &corewar);
     if (champion == NULL) {
-        free_struct(corewar, champion);
         return 84;
     }
     free_struct(corewar, champion);
