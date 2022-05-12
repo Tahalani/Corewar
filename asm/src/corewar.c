@@ -37,12 +37,6 @@ int write_aff(int fd)
     return (0);
 }
 
-// int print_in_char(int fd, char c)
-// {
-//     write(fd, &c, 1);
-//     return (0);
-// }
-
 char **init_struct(header_t *header, char *path, int count, char **array)
 {
     char *str = NULL;
@@ -73,22 +67,27 @@ int yolotron_asm(char *path, char **av)
 {
     header_t *header = malloc(sizeof(header_t));
     char **array = NULL;
+    int fd = 0;
 
-    // header->name = malloc(sizeof(char) * 128);
-    // header->comment = malloc(sizeof(char) * 2048);
     array = init_struct(header, path, 0, array);
-    int fd = open(av[2], O_CREAT | O_RDWR, S_IRUSR | S_IRGRP | S_IROTH);
+    fd = open(av[2], O_CREAT | O_RDWR, S_IRUSR | S_IRGRP | S_IROTH);
+    if (fd == -1)
+        return (-1);
     struct struct_header st_header = {
         .magic = header->magic,
-        .name = header->name,
+        .name = NULL,
         .prog_size = header->prog_size,
-        .comment = header->comment
+        .comment = NULL
     };
-    printf("%s\n", st_header.name);
-    printf("%s\n", st_header.comment);
-    printf("%d\n", st_header.magic);
-    printf("%d\n", st_header.prog_size);
-    write(fd, &st_header, sizeof(st_header));
-    // write_champion(header, array);
+    for (int i = strlen(header->name); i < 128; i++)
+        header->name[i] = '\0';
+    for (int i = strlen(header->comment); i < 2048; i++)
+        header->comment[i] = '\0';
+    for (int i = 0; i < 128; i++)
+        st_header.name[i] = header->name[i];
+    for (int i = 0; i < 2048; i++)
+        st_header.comment[i] = header->comment[i];
+    if (write(fd, &st_header, sizeof(st_header)) == -1)
+        return (-1);
     return (0);
 }
