@@ -11,7 +11,7 @@
 
 int write_aff(int fd)
 {
-    char c = 10;
+    char c = 16;
 
     write(fd, &c, 1);
     return (0);
