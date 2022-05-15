@@ -22,9 +22,14 @@ int handle_options(int fd, char *target)
     int return_value = 0;
 
     for (int count = 0; count != 16; count++) {
-        // printf("TARGET: [%s]\n", target);
+        printf("TARGET: [%s]\n", target);
+        for (int i = 0; target[i] != '\0'; i++) {
+            if (target[i] == ':' && (target[i + 1] == '\n' ||
+            target[i + 1] == '\0'))
+            return (0);
+        }
         if (strcmp(target, OPT_ARRAY[count]) == 0) {
-            // printf("--------INSIDE--------\n");
+            printf("%d\n", count);
             return_value = (*OPT_FUNC[count]) (fd);
             return (2);
         }
@@ -52,8 +57,7 @@ int yolotron_asm(char *path, char **av)
         return (-1);
     if ((fd = write_name_comment(*header, av[2])) == -1)
         return (-1);
-    for (unsigned int i = 0; array[i] != NULL; i++) {
+    for (unsigned int i = 0; array[i] != NULL; i++)
         handle_options(fd, array[i]);
-    }
     return (0);
 }
