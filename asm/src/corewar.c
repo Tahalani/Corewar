@@ -22,14 +22,14 @@ int handle_options(int fd, char *target)
     int return_value = 0;
 
     for (int count = 0; count != 16; count++) {
-        printf("TARGET: [%s]\n", target);
+        // printf("TARGET: [%s]\n", target);
         for (int i = 0; target[i] != '\0'; i++) {
             if (target[i] == ':' && (target[i + 1] == '\n' ||
             target[i + 1] == '\0'))
             return (0);
         }
         if (strcmp(target, OPT_ARRAY[count]) == 0) {
-            printf("%d\n", count);
+            // printf("%d\n", count);
             return_value = (*OPT_FUNC[count]) (fd);
             return (2);
         }
