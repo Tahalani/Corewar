@@ -42,7 +42,7 @@ int write_zjmp(int fd)
 
 int write_ldi(int fd)
 {
-    char c = 'a';
+    char c = 10;
 
     write(fd, &c, 1);
     return (0);
