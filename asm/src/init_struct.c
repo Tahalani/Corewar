@@ -44,6 +44,8 @@ char **init_struct(header_t *header, char *path, int count, char **array)
     while ((size_str = getline(&buffer, &size, fd)) > 0) {
         if (buffer == NULL)
             return (NULL);
+        if (buffer[0] == '#')
+            continue;
         buffer[size_str] = '\0';
         array = str_to_word(buffer, '"');
         check_champ_info(header, count, array);
