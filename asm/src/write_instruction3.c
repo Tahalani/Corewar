@@ -18,7 +18,7 @@ int write_sti(int fd)
 
 int write_fork(int fd)
 {
-    char c = 'c';
+    char c = 12;
 
     write(fd, &c, 1);
     return (0);
@@ -26,7 +26,7 @@ int write_fork(int fd)
 
 int write_lld(int fd)
 {
-    char c = 'd';
+    char c = 13;
 
     write(fd, &c, 1);
     return (0);
@@ -34,7 +34,7 @@ int write_lld(int fd)
 
 int write_lldi(int fd)
 {
-    char c = 'e';
+    char c = 14;
 
     write(fd, &c, 1);
     return (0);
@@ -42,7 +42,7 @@ int write_lldi(int fd)
 
 int write_lfork(int fd)
 {
-    char c = 'f';
+    char c = 15;
 
     write(fd, &c, 1);
     return (0);

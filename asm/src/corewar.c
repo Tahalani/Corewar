@@ -29,7 +29,7 @@ int handle_options(int fd, char *target)
                 return (0);
         }
         if (strcmp(target, OPT_ARRAY[count]) == 0) {
-            printf("%d\n", count);
+            // printf("%d\n", count);
             return_value = (*OPT_FUNC[count]) (fd);
             return (2);
         }
