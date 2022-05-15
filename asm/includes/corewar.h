@@ -69,6 +69,8 @@ int write_lfork(int fd);
 
 int write_aff(int fd);
 
+int write_register(int fd);
+
 char **init_struct(header_t *header, char *path, int count, char **array);
 
 #endif/* !PROJET_H_ */

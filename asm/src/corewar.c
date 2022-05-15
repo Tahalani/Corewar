@@ -52,10 +52,8 @@ int yolotron_asm(char *path, char **av)
         return (-1);
     if ((fd = write_name_comment(*header, av[2])) == -1)
         return (-1);
-    for (int i = 0 ; array[i]; ++i)
-        printf("array[i]: [%s]\n", array[i]);
-    // for (unsigned int i = 0; array[i] != NULL; i++) {
-    //     handle_options(fd, av[i]);
-    // }
+    for (unsigned int i = 0; array[i] != NULL; i++) {
+        handle_options(fd, array[i]);
+    }
     return (0);
 }

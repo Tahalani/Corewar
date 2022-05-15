@@ -16,3 +16,11 @@ int write_aff(int fd)
     write(fd, &c, 1);
     return (0);
 }
+
+int write_register(int fd)
+{
+    char c = 1;
+
+    write(fd, &c, 1);
+    return (0);
+}
