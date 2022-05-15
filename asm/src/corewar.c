@@ -21,8 +21,8 @@ int handle_options(int fd, char *target)
 {
     int return_value = 0;
 
-    for (int count = 0; count != 16; count++) {
-        // printf("TARGET: [%s]\n", target);
+    for (int count = 0; count != 17; count++) {
+        printf("TARGET: [%s]\n", target);
         for (int i = 0; target[i] != '\0'; i++) {
             if (target[i] == ':' && (target[i + 1] == '\n' ||
             target[i + 1] == '\0'))
