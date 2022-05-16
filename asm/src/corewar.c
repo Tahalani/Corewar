@@ -26,7 +26,7 @@ int handle_options(int fd, char *target)
         for (int i = 0; target[i] != '\0'; i++) {
             if (target[i] == ':' && (target[i + 1] == '\n' ||
             target[i + 1] == '\0'))
-                return (0);
+                return (-1);
         }
         if (strcmp(target, OPT_ARRAY[count]) == 0) {
             // printf("%d\n", count);
@@ -53,19 +53,19 @@ int yolotron_asm(char *path, char **av)
     char **array = NULL;
     char **array_line = NULL;
     int fd = 0;
+    int check = 0;
 
     if ((array = init_struct(header, path, 0, array)) == NULL)
         return (-1);
     if ((fd = write_name_comment(*header, av[2])) == -1)
         return (-1);
-    // for (int i = 0; array[i]; ++i)
-    //     printf("array[%d]: [%s]\n", i, array[i]);
-    for (unsigned int i = 0; array[i] != NULL; i++) {
+    for (unsigned int i = 1; i != 2; i++) {
         array_line = str_to_word(array[i], ' ');
-        // for (int k = 0; array_line[k]; ++k)
-        //     printf("array_line[%d]: [%s]\n", i, array_line[k]);
-        for (unsigned int i = 0; array_line[i] != NULL; i++)
-            handle_options(fd, array_line[i]);
+        for (unsigned int k = 0; array_line[k] != NULL; k++) {
+            check = handle_options(fd, array_line[k]);
+            if (k == 0 && check != -1)
+                write_arg(fd, array_line);
+        }
     }
     return (0);
 }

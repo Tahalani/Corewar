@@ -25,9 +25,9 @@ int without_padding(void);
 
 int with_padding(void);
 
-char **str_to_word(char const *str, char separator);
+int write_arg(int fd, char **array_line);
 
-char **str_to_word_instruction(char const *str, char separator);
+char **str_to_word(char const *str, char separator);
 
 int handle_options(int fd, char *array);
 
