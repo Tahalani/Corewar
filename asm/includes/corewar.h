@@ -25,9 +25,13 @@ int without_padding(void);
 
 int with_padding(void);
 
-int write_arg(int fd, char **array_line);
+int write_total_arg(int fd, char **array_line);
+
+int write_arg(int fd, char *array_line);
 
 char **str_to_word(char const *str, char separator);
+
+int write_modulo(int fd, int post_modulo);
 
 int handle_options(int fd, char *array);
 
@@ -69,7 +73,7 @@ int write_lfork(int fd);
 
 int write_aff(int fd);
 
-int write_register(int fd);
+int write_register(int fd, int post_register);
 
 char **init_struct(header_t *header, char *path, int count, char **array);
 
