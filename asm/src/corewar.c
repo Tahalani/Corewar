@@ -22,7 +22,7 @@ int handle_options(int fd, char *target)
     int return_value = 0;
 
     for (int count = 0; count != 17; count++) {
-        printf("TARGET: [%s]\n", target);
+        //printf("TARGET: [%s]\n", target);
         for (int i = 0; target[i] != '\0'; i++) {
             if (target[i] == ':' && (target[i + 1] == '\n' ||
             target[i + 1] == '\0'))
@@ -51,13 +51,21 @@ int yolotron_asm(char *path, char **av)
 {
     header_t *header = malloc(sizeof(header_t));
     char **array = NULL;
+    char **array_line = NULL;
     int fd = 0;
 
     if ((array = init_struct(header, path, 0, array)) == NULL)
         return (-1);
     if ((fd = write_name_comment(*header, av[2])) == -1)
         return (-1);
-    for (unsigned int i = 0; array[i] != NULL; i++)
-        handle_options(fd, array[i]);
+    // for (int i = 0; array[i]; ++i)
+    //     printf("array[%d]: [%s]\n", i, array[i]);
+    for (unsigned int i = 0; array[i] != NULL; i++) {
+        array_line = str_to_word(array[i], ' ');
+        // for (int k = 0; array_line[k]; ++k)
+        //     printf("array_line[%d]: [%s]\n", i, array_line[k]);
+        for (unsigned int i = 0; array_line[i] != NULL; i++)
+            handle_options(fd, array_line[i]);
+    }
     return (0);
 }

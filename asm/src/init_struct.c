@@ -26,7 +26,7 @@ static char **init_instruction(header_t *header, char *str, char **array)
 {
     header->magic = COREWAR_EXEC_MAGIC;
     header->prog_size = 23;
-    array = str_to_word(str, ' ');
+    array = str_to_word(str, '\n');
     return (array);
 }
 
