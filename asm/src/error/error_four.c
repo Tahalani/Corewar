@@ -1,0 +1,40 @@
+/*
+** EPITECH PROJECT, 2022
+** B-CPE-201-PAR-2-1-corewar-mehdi.djendar
+** File description:
+** error_four
+*/
+
+#include "my.h"
+#include "corewar.h"
+#include "error_asm.h"
+
+int error_aff(char **params)
+{
+    if (params[2] != NULL)
+        return (84);
+    return (0);
+}
+
+int error_options(char **params)
+{
+    int return_value = 0;
+
+    for (int count = 0; count != 16; count++) {
+        if (strcmp(params[0], ERROR_ARRAY[count]) == 0) {
+            return_value = (*ERROR_FUNC[count]) (params);
+            return (return_value);
+        }
+    }
+    return (return_value);
+}
+
+int error_handling(char *buffer)
+{
+    char **params = my_str_to_word_array(buffer, ' ');
+
+    for (int i = 0; params[i]; i++)
+        if (error_options(params) == 84)
+            return (84);
+    return (0);
+}

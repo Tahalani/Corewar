@@ -40,7 +40,6 @@ int write_add(int fd)
     return (0);
 }
 
-
 int write_sub(int fd)
 {
     char c = 5;

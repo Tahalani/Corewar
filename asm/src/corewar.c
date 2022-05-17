@@ -23,7 +23,7 @@ int handle_options(int fd, char *target)
 
     for (int count = 0; count != 16; count++) {
         for (int i = 0; target[i] != '\0'; i++) {
-            if (target[i] == ':' && (target[i + 1] == '\n' ||
+            if (target[i] == LABEL_CHAR && (target[i + 1] == '\n' ||
             target[i + 1] == '\0'))
                 return (-1);
         }
@@ -58,7 +58,7 @@ int yolotron_asm(char *path, char **av)
     if ((fd = write_name_comment(*header, av[2])) == -1)
         return (-1);
     for (unsigned int i = 1; array[i] != NULL; i++) {
-        array_line = str_to_word(array[i], ' ');
+        array_line = my_str_to_word_array(array[i], ' ');
         for (unsigned int k = 0; array_line[k] != NULL; k++) {
             if (k == 0)
                 check = handle_options(fd, array_line[k]);

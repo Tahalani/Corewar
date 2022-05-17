@@ -25,8 +25,7 @@ static int (*OPT_FUNC[]) (int fd) = {
     write_lld,
     write_lldi,
     write_lfork,
-    write_aff,
-    write_register
+    write_aff
 };
 
 static const char *OPT_ARRAY[] = {
@@ -45,8 +44,7 @@ static const char *OPT_ARRAY[] = {
     "lld",
     "lldi",
     "lfork",
-    "aff",
-    "r1"
+    "aff"
 };
 
 #endif/* !OPTION_ASM_H_ */

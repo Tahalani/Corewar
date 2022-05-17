@@ -13,6 +13,8 @@
 
 char **my_str_to_word_array(char *str, char separator);
 
+int my_get_char_nbr(char c);
+
 char *my_strdup(char const *src);
 
 char *my_strupcase(char *str);

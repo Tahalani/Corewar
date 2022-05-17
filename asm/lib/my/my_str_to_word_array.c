@@ -9,7 +9,7 @@
 
 int my_str_compt(char a, char separator)
 {
-    if (a == separator || a == '\0' || a == '\t') {
+    if (a == separator || a == '\0' || a == '\t' || a == ',') {
         return (0);
     }
     return (1);
@@ -25,7 +25,8 @@ int compteur_word(char const *str, char separator)
         my_str_compt(str[i + 1], separator) == 0)
             j++;
     }
-    if (str[0] != '\0' && j == 0 && str[0] != separator && str[0] != '\t')
+    if (str[0] != '\0' && j == 0 && str[0]
+    != separator && str[0] != '\t' && str[0] != ',')
         j++;
     return (j);
 }
@@ -66,7 +67,7 @@ char **my_str_to_word_array(char const *str, char separator)
             x++;
             i++;
         }
-        for (; str[i] == separator; i++);
+        for (; str[i] == separator || str[i] == ','; i++);
         tab[y][x] = '\0';
         x = 0;
     }

@@ -27,7 +27,6 @@ int write_register(int fd, int post_register)
 
 int write_modulo(int fd, int post_modulo)
 {
-    printf("%d\n", post_modulo);
     char c = post_modulo;
 
     write(fd, &c, 1);

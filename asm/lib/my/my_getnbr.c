@@ -25,3 +25,18 @@ int my_getnbr(char *str)
         }
     return (nbr * j);
 }
+
+int my_get_char_nbr(char c)
+{
+    int nbr = 0;
+    int i = 0;
+    int j = 1;
+
+    if (c >= '0' && c <= '9') {
+        nbr *= 10;
+        nbr = nbr + c - '0';
+        i++;
+    } else
+        return (nbr * j);
+    return (nbr * j);
+}

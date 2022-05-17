@@ -9,20 +9,35 @@ EXT_CRI		=		*.gcno *.gcda
 
 EXTENSION	=		.c
 
-SRC			=		$(addsuffix .c, $(addprefix src/,	\
+SRC			=		$(addsuffix .c, $(addprefix src/,		\
 					corewar									\
-					write_instruction						\
-					write_instruction2						\
-					write_instruction3						\
-					write_instruction4						\
+					instruction/write_instruction			\
+					instruction/write_instruction2			\
+					instruction/write_instruction3			\
+					instruction/write_instruction4			\
 					init_struct								\
 					write_arg								\
 					my_str_to								\
+					error/error_one							\
+					error/error_two							\
+					error/error_three						\
+					error/error_four						\
 					main))									\
 
 SRCT		=		tests/tests_projet$(EXTENSION)			\
 					$(addsuffix .c, $(addprefix src/,		\
-					cesar))									\
+					instruction/write_instruction			\
+					instruction/write_instruction2			\
+					instruction/write_instruction3			\
+					instruction/write_instruction4			\
+					init_struct								\
+					write_arg								\
+					my_str_to								\
+					error/error_one							\
+					error/error_two							\
+					error/error_three						\
+					error/error_four						\
+					corewar))								\
 
 OBJ			=		$(SRC:$(EXTENSION)=.o)
 

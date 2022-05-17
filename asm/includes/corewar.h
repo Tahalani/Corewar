@@ -77,4 +77,44 @@ int write_register(int fd, int post_register);
 
 char **init_struct(header_t *header, char *path, int count, char **array);
 
+int error_live(char **params);
+
+int error_ld(char **params);
+
+int error_st(char **params);
+
+int error_add(char **params);
+
+int error_sub(char **params);
+
+int error_and(char **params);
+
+int error_aff(char **params);
+
+int error_or(char **params);
+
+int error_xor(char **params);
+
+int error_zjmp(char **params);
+
+int error_ldi(char **params);
+
+int error_sti(char **params);
+
+int error_fork(char **params);
+
+int error_lld(char **params);
+
+int error_lldi(char **params);
+
+int error_lfork(char **params);
+
+int error_aff(char **params);
+
+int error_handling(char *buffer);
+
+int error_options(char **params);
+
+int decim_to_bin(void);
+
 #endif/* !PROJET_H_ */

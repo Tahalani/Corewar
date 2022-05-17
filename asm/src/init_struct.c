@@ -34,17 +34,22 @@ char **init_struct(header_t *header, char *path, int count, char **array)
 {
     char *buffer = NULL;
     size_t size = 0;
+    struct stat stats;
     FILE *fd = fopen(path, "r");
-    char *str = malloc(sizeof(char) * 500);
+    if (stat(path, &stats) == -1)
+        return (NULL);
+    char *str = malloc(sizeof(char) * (stats.st_size + 1));
     ssize_t size_str = 0;
 
     str[0] = '\0';
     if (str == NULL || fd == NULL)
         return (NULL);
     while ((size_str = getline(&buffer, &size, fd)) > 0) {
+        if (error_handling(buffer) == 84)
+            return (NULL);
         if (buffer == NULL)
             return (NULL);
-        if (buffer[0] == '#')
+        if (buffer[0] == COMMENT_CHAR)
             continue;
         buffer[size_str] = '\0';
         array = str_to_word(buffer, '"');
