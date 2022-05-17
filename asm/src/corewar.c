@@ -10,13 +10,6 @@
 #include "option_asm.h"
 #include "op.h"
 
-typedef struct struct_header {
-    int magic;
-    char name[128];
-    int prog_size;
-    char comment[2048];
-} __attribute__ ((packed));
-
 int handle_options(int fd, char *target)
 {
     int return_value = 0;
