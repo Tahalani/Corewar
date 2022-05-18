@@ -45,10 +45,14 @@ int yolotron_asm(char *path, char **av)
     char **array_line = NULL;
     int fd = 0;
     int check = 0;
+    char *name_file = malloc(sizeof(char) * (my_strlen(av[1]) + 5));
 
+    for (int i = 0; av[1][i] != '.' && av[1][i] != '\0'; i++)
+        name_file[i] = av[1][i];
+    strcat(name_file, ".cor");
     if ((array = init_struct(header, path, 0, array)) == NULL)
         return (-1);
-    if ((fd = write_name_comment(*header, av[2])) == -1)
+    if ((fd = write_name_comment(*header, name_file)) == -1)
         return (-1);
     for (unsigned int i = 1; array[i] != NULL; i++) {
         array_line = my_str_to_word_array(array[i], ' ');
