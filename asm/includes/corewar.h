@@ -17,6 +17,8 @@
     #include <string.h>
     #include "op.h"
 
+int error_before_getline(char *path);
+
 int write_wome_text(void);
 
 int write_a_number_as_int(void);
