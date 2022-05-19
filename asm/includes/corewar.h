@@ -44,6 +44,7 @@ static const struct arg_byte_s ARG[] = {
     {"lfork", 2},
     {"aff", DIR_SIZE},
 };
+
 int error_before_getline(char *path);
 
 int write_wome_text(void);

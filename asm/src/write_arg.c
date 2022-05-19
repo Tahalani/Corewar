@@ -67,6 +67,7 @@ int get_pos_label(int fd, count_t *count_sruct, char *array_line)
 {
     int c = -1;
     printf("%s\n", array_line);
+    count_sruct->byte += 2;
     write(fd, &c, 2);
     return (0);
 }
