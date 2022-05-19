@@ -62,13 +62,13 @@ int write_total_arg(int fd, char **array_line)
     return (0);
 }
 
-int write_arg(int fd, char *array_line)
+int write_arg(int fd, char *array_line, char *mnemonic)
 {
     for (unsigned int i = 0; array_line[i] != '\0'; i++) {
         if (array_line[i] == 'r')
             write_register(fd, ATOD(array_line[i + 1]));
         if (array_line[i] == DIRECT_CHAR && array_line[i + 1] != LABEL_CHAR)
-            write_modulo(fd, ATOD(array_line[i + 1]));
+            write_modulo(fd, ATOD(array_line[i + 1]), mnemonic);
     }
     return (0);
 }

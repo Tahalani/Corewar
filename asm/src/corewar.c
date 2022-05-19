@@ -59,10 +59,13 @@ int yolotron_asm(char *path, char **av)
         for (unsigned int k = 0; array_line[k] != NULL; k++) {
             if (k == 0)
                 check = handle_options(fd, array_line[k]);
-            if (k == 0 && check != -1)
+            if (k == 0 && check != -1 && ((strstr(array_line[k], "zjmp") ==
+            NULL && (strstr(array_line[k], "live")) == NULL &&
+            (strstr(array_line[k], "fork")) == NULL && (strstr(array_line[k],
+            "lfork")) == NULL)))
                 write_total_arg(fd, array_line);
             else if (k != 0)
-                write_arg(fd, array_line[k]);
+                write_arg(fd, array_line[k], array_line[0]);
         }
     }
     return (0);

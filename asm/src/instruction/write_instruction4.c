@@ -25,10 +25,15 @@ int write_register(int fd, int post_register)
     return (0);
 }
 
-int write_modulo(int fd, int post_modulo)
+int write_modulo(int fd, int post_modulo, char *mnemonic)
 {
-    char c = post_modulo;
+    int arg = post_modulo;
 
-    write(fd, &c, 1);
+    for (unsigned int i = 0; i != 16; i++) {
+        if (strstr(mnemonic, ARG[i].mnemonic) != NULL) {
+            write(fd, &arg, ARG[i].byte);
+            return (0);
+        }
+    }
     return (0);
 }

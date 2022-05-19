@@ -17,6 +17,30 @@
     #include <string.h>
     #include "op.h"
 
+typedef struct arg_byte_s {
+    char *mnemonic;
+    int byte;
+} arg_byte_t;
+
+static const struct arg_byte_s ARG[] = {
+    {"live", 4},
+    {"ld", 4},
+    {"add", 4},
+    {"sub", 4},
+    {"and", 4},
+    {"or", 4},
+    {"xor", 4},
+    {"zjmp", 2},
+    {"ldi", 2},
+    {"sti", 2},
+    {"st", 4},
+    {"fork", 2},
+    {"lld", 4},
+    {"lldi", 2},
+    {"lfork", 2},
+    {"aff", 4},
+};
+
 int write_wome_text(void);
 
 int write_a_number_as_int(void);
@@ -27,11 +51,11 @@ int with_padding(void);
 
 int write_total_arg(int fd, char **array_line);
 
-int write_arg(int fd, char *array_line);
+int write_arg(int fd, char *array_line, char *mnemonic);
 
 char **str_to_word(char const *str, char separator);
 
-int write_modulo(int fd, int post_modulo);
+int write_modulo(int fd, int post_modulo, char *mnemonic);
 
 int handle_options(int fd, char *array);
 
