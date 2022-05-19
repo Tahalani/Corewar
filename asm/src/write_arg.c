@@ -21,7 +21,7 @@ int conv_2_10(char *num)
     return res;
 }
 
-int write_bite(int bit, int fd)
+int write_bite(int bit, int fd, count_t *count_sruct)
 {
     static int cpt = 0;
     static char buffer[8];
@@ -34,13 +34,14 @@ int write_bite(int bit, int fd)
         cpt = 0;
         character = (unsigned char)conv_2_10(buffer);
         write(fd, &character, 1);
+        count_sruct->byte++;
         return cpt;
     } else
         cpt++;
     return cpt;
 }
 
-int write_total_arg(int fd, char **array_line)
+int write_total_arg(int fd, char **array_line, count_t *count_sruct)
 {
     char *value_arg = malloc(sizeof(char) * (8 + 1));
     unsigned int k = 0;
@@ -57,18 +58,28 @@ int write_total_arg(int fd, char **array_line)
        value_arg[i] = '0';
     for (int i = 0; i != 8; i++) {
         int nb_char = my_get_char_nbr(value_arg[i]);
-        write_bite(nb_char, fd);
+        write_bite(nb_char, fd, count_sruct);
     }
     return (0);
 }
 
-int write_arg(int fd, char *array_line, char *mnemonic)
+int get_pos_label(int fd, count_t *count_sruct, char *array_line)
+{
+    int c = -1;
+    printf("%s\n", array_line);
+    write(fd, &c, 2);
+    return (0);
+}
+
+int write_arg(int fd, char *array_line, char *mnemonic, count_t *count_sruct)
 {
     for (unsigned int i = 0; array_line[i] != '\0'; i++) {
         if (array_line[i] == 'r')
-            write_register(fd, ATOD(array_line[i + 1]));
+            write_register(fd, ATOD(array_line[i + 1]), count_sruct);
         if (array_line[i] == DIRECT_CHAR && array_line[i + 1] != LABEL_CHAR)
-            write_modulo(fd, ATOD(array_line[i + 1]), mnemonic);
+            write_modulo(fd, ATOD(array_line[i + 1]), mnemonic, count_sruct);
+        if (array_line[i] == DIRECT_CHAR && array_line[i + 1] == LABEL_CHAR)
+            get_pos_label(fd, count_sruct, array_line);
     }
     return (0);
 }

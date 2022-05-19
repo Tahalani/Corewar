@@ -9,7 +9,7 @@
     #define OPTION_ASM_H_
     #include "corewar.h"
 
-static int (*OPT_FUNC[]) (int fd) = {
+static int (*OPT_FUNC[]) (int fd, count_t *count_sruct) = {
     write_live,
     write_ld,
     write_st,

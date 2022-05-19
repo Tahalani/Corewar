@@ -17,28 +17,32 @@
     #include <string.h>
     #include "op.h"
 
+typedef struct count_s {
+    int byte;
+} count_t;
+
 typedef struct arg_byte_s {
     char *mnemonic;
     int byte;
 } arg_byte_t;
 
 static const struct arg_byte_s ARG[] = {
-    {"live", 4},
-    {"ld", 4},
-    {"add", 4},
-    {"sub", 4},
-    {"and", 4},
-    {"or", 4},
-    {"xor", 4},
+    {"live", DIR_SIZE},
+    {"ld", DIR_SIZE},
+    {"add", DIR_SIZE},
+    {"sub", DIR_SIZE},
+    {"and", DIR_SIZE},
+    {"or", DIR_SIZE},
+    {"xor", DIR_SIZE},
     {"zjmp", 2},
     {"ldi", 2},
     {"sti", 2},
-    {"st", 4},
+    {"st", DIR_SIZE},
     {"fork", 2},
-    {"lld", 4},
+    {"lld", DIR_SIZE},
     {"lldi", 2},
     {"lfork", 2},
-    {"aff", 4},
+    {"aff", DIR_SIZE},
 };
 
 int write_wome_text(void);
@@ -49,55 +53,55 @@ int without_padding(void);
 
 int with_padding(void);
 
-int write_total_arg(int fd, char **array_line);
+int write_total_arg(int fd, char **array_line, count_t *count_sruct);
 
-int write_arg(int fd, char *array_line, char *mnemonic);
+int write_arg(int fd, char *array_line, char *mnemonic, count_t *count_sruct);
 
 char **str_to_word(char const *str, char separator);
 
-int write_modulo(int fd, int post_modulo, char *mnemonic);
+int write_modulo(int fd, int post_modulo, char *mnemonic, count_t *count_sruct);
 
-int handle_options(int fd, char *array);
+int handle_options(int fd, char *array, count_t *count_sruct);
 
 int yolotron(char *path);
 
 int yolotron_asm(char *path, char **av);
 
-int write_live(int fd);
+int write_live(int fd, count_t *count_sruct);
 
-int write_ld(int fd);
+int write_ld(int fd, count_t *count_sruct);
 
-int write_st(int fd);
+int write_st(int fd, count_t *count_sruct);
 
-int write_add(int fd);
+int write_add(int fd, count_t *count_sruct);
 
-int write_sub(int fd);
+int write_sub(int fd, count_t *count_sruct);
 
-int write_and(int fd);
+int write_and(int fd, count_t *count_sruct);
 
-int write_aff(int fd);
+int write_aff(int fd, count_t *count_sruct);
 
-int write_or(int fd);
+int write_or(int fd, count_t *count_sruct);
 
-int write_xor(int fd);
+int write_xor(int fd, count_t *count_sruct);
 
-int write_zjmp(int fd);
+int write_zjmp(int fd, count_t *count_sruct);
 
-int write_ldi(int fd);
+int write_ldi(int fd, count_t *count_sruct);
 
-int write_sti(int fd);
+int write_sti(int fd, count_t *count_sruct);
 
-int write_fork(int fd);
+int write_fork(int fd, count_t *count_sruct);
 
-int write_lld(int fd);
+int write_lld(int fd, count_t *count_sruct);
 
-int write_lldi(int fd);
+int write_lldi(int fd, count_t *count_sruct);
 
-int write_lfork(int fd);
+int write_lfork(int fd, count_t *count_sruct);
 
-int write_aff(int fd);
+int write_aff(int fd, count_t *count_sruct);
 
-int write_register(int fd, int post_register);
+int write_register(int fd, int post_register, count_t *count_sruct);
 
 char **init_struct(header_t *header, char *path, int count, char **array);
 
