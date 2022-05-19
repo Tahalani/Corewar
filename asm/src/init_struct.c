@@ -8,6 +8,7 @@
 #include "my.h"
 #include "corewar.h"
 #include "op.h"
+#include <stdint.h>
 
 static int check_champ_info(header_t *header, int count, char **array)
 {
@@ -23,19 +24,24 @@ static int check_champ_info(header_t *header, int count, char **array)
     return (84);
 }
 
+uint8_t *my_rev_bit(uint8_t *str, unsigned int len)
+{
+    uint8_t c;
+
+    for (unsigned int i = 0; i < len; i++, len--) {
+        c = str[i];
+        str[i] = str[len - 1];
+        str[len - 1] = c;
+    }
+    return (str);
+}
+
 static char **init_instruction(header_t *header, char *str, char **array)
 {
-    int tmp = COREWAR_EXEC_MAGIC;
-    void *ptr = &(tmp);
-    int result = *(int *)my_revstr(ptr);
-    int result_int_magic = (int)result;
-    int tmp_two = 23;
-    void *ptr_two = &(tmp_two);
-    int result_two = *(int *)my_revstr(ptr_two);
-    int result_prog_size = (int)result_two;
-
-    header->magic = result_int_magic;
-    header->prog_size = result_prog_size;
+    header->magic = COREWAR_EXEC_MAGIC;
+    header->prog_size = 23;
+    my_rev_bit((uint8_t*)&header->magic, 4);
+    my_rev_bit((uint8_t*)&header->prog_size, 4);
     array = str_to_word(str, '\n');
     return (array);
 }

@@ -15,6 +15,7 @@
     #include <sys/stat.h>
     #include <fcntl.h>
     #include <string.h>
+    #include <stdint.h>
     #include "op.h"
 
 typedef struct count_s {
@@ -44,6 +45,8 @@ static const struct arg_byte_s ARG[] = {
     {"lfork", 2},
     {"aff", DIR_SIZE},
 };
+
+uint8_t *my_rev_bit(uint8_t *str, unsigned int len);
 
 int error_before_getline(char *path);
 

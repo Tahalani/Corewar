@@ -55,8 +55,10 @@ int yolotron_asm(char *path, char **av)
         return (-1);
     if ((fd = write_name_comment(*header, name_file)) == -1)
         return (-1);
-    for (unsigned int i = 1; array[i] != NULL; i++) {
+    for (unsigned int i = 0; array[i] != NULL; i++) {
         array_line = my_str_to_word_array(array[i], ' ');
+        for (int i = 0; array_line[i]; i++)
+            printf("non = %s\n", array_line[i]);
         for (unsigned int k = 0; array_line[k] != NULL; k++) {
             check = handle_options(fd, array_line[k], count_sruct);
             if (k == 0 && check != -1 && ((strstr(array_line[k], "zjmp") ==

@@ -34,6 +34,7 @@ int write_modulo(int fd, int post_modulo, char *mnemonic, count_t *count_sruct)
     for (unsigned int i = 0; i != 16; i++) {
         if (strstr(mnemonic, ARG[i].mnemonic) != NULL) {
             count_sruct->byte += ARG[i].byte;
+            my_rev_bit((void *)&arg, ARG[i].byte);
             write(fd, &arg, ARG[i].byte);
             return (0);
         }

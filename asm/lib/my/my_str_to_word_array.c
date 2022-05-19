@@ -67,7 +67,7 @@ char **my_str_to_word_array(char const *str, char separator)
             x++;
             i++;
         }
-        for (; str[i] == separator || str[i] == ','; i++);
+        for (; str[i] == separator || str[i] == ',' || str[i] == '\t'; i++);
         tab[y][x] = '\0';
         x = 0;
     }
