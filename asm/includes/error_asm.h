@@ -47,4 +47,4 @@ static const char *ERROR_ARRAY[] = {
     "aff",
 };
 
-#endif /* !ERROR_ASM_H_ */
+#endif/* !ERROR_ASM_H_ */
