@@ -71,11 +71,16 @@ int yolotron_asm(char *path, char **av)
     char **array = NULL;
     char **array_line = NULL;
     int fd = 0;
-    char *name_file = malloc(sizeof(char) * (my_strlen(av[1]) + 5));
+    char *name_file = malloc(sizeof(char) * (my_strlen(av[1]) + 3));
+    int i = 0;
+    name_file[my_strlen(av[1]) - 2] = '\0';
 
-    for (int i = 0; av[1][i] != '.' && av[1][i] != '\0'; i++)
+
+    for (; av[1][i] != '.' && av[1][i] != '\0'; i++)
         name_file[i] = av[1][i];
-    strcat(name_file, ".cor");
+    // printf("val de strlen %i)\n", my_strlen(name_file));
+    name_file = my_strcat(name_file, ".cor\0");
+    // printf("%s\n", name_file);
     if ((array = init_struct(header, path, 0, array)) == NULL)
         return (-1);
     if ((fd = write_name_comment(*header, name_file)) == -1)
