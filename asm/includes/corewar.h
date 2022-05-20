@@ -21,6 +21,11 @@
 
 typedef struct count_s {
     int byte;
+    char **label_array;
+    int count_label;
+    char **get_label;
+    int count_distance;
+    int check;
 } count_t;
 
 typedef struct arg_byte_s {
@@ -63,15 +68,18 @@ int without_padding(void);
 
 int with_padding(void);
 
+char *int_to_str(int number);
+
 int write_total_arg(int fd, char **array_line, count_t *count_sruct);
 
-int write_arg(int fd, char *array_line, char *mnemonic, count_t *count_sruct);
+int write_arg(int fd, char *array_line, char *mnemonic,
+count_t *count_sruct, int line);
 
 char **str_to_word(char const *str, char separator);
 
 int write_modulo(int fd, int post_modulo, char *mnemonic, count_t *count_sruct);
 
-int handle_options(int fd, char *array, count_t *count_sruct);
+int handle_options(int fd, char *array, count_t *count_sruct, int line, int k);
 
 int yolotron(char *path);
 
@@ -90,6 +98,8 @@ int write_sub(int fd, count_t *count_sruct);
 int write_and(int fd, count_t *count_sruct);
 
 int write_aff(int fd, count_t *count_sruct);
+
+int write_label(int fd, count_t *count_sruct);
 
 int write_or(int fd, count_t *count_sruct);
 
