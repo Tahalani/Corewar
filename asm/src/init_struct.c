@@ -20,7 +20,7 @@ static char **init_instruction(header_t *header, char *str, char **array)
     return (array);
 }
 
-char *before_getline(char *str, FILE *fd, char *path)
+char *before_getline(char *str, FILE *fd, char *path, header_t *header)
 {
     struct stat stats;
 
@@ -43,7 +43,7 @@ char **init_struct(header_t *header, char *path, int count, char **array)
     ssize_t size_str = 0;
     char *str = NULL;
 
-    str = before_getline(str, fd, path);
+    str = before_getline(str, fd, path, header);
     if (str == NULL)
         return (NULL);
     while ((size_str = getline(&buffer, &size, fd)) > 0) {

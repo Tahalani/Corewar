@@ -9,7 +9,7 @@
 
 int my_str_compt(char a, char separator)
 {
-    if (a == separator || a == '\0' || a == '\t' || a == ',') {
+    if (a == separator || a == '\0' || a == '\t' || a == ' ' || a == '\n') {
         return (0);
     }
     return (1);
@@ -26,7 +26,7 @@ int compteur_word(char const *str, char separator)
             j++;
     }
     if (str[0] != '\0' && j == 0 && str[0]
-    != separator && str[0] != '\t' && str[0] != ',')
+    != separator && str[0] != '\t' && str[0] != ' ' && str[0] != '\n')
         j++;
     return (j);
 }
@@ -46,7 +46,7 @@ char **mal_char(char const *str, char separator)
             a = 0;
             x++;
         }
-        for (; str[i] == separator; i++);
+        for (; str[i] == separator || str[i] == ' ' || str[i] == '\t'; i++);
     }
     if (my_str_compt(str[i - 1], separator) != 0) {
         pl[count - 1] = malloc(sizeof(char) * (a + 1));
@@ -67,7 +67,7 @@ char **my_str_to_word_array(char const *str, char separator)
             x++;
             i++;
         }
-        for (; str[i] == separator || str[i] == ',' || str[i] == '\t'; i++);
+        for (; str[i] == separator || str[i] == ' ' || str[i] == '\t'; i++);
         tab[y][x] = '\0';
         x = 0;
     }

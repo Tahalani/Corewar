@@ -50,7 +50,7 @@ int error_before_getline(char *path)
 
 int error_handling(char *buffer)
 {
-    char **params = my_str_to_word_array(buffer, ' ');
+    char **params = my_str_to_word_array(buffer, ',');
 
     for (int i = 0; params[i]; i++)
         if (error_options(params) == 84)
