@@ -21,7 +21,7 @@ int error_options(char **params)
     int return_value = 0;
 
     for (int count = 0; count != 16; count++) {
-        if (strcmp(params[0], ERROR_ARRAY[count]) == 0) {
+        if (my_strcmp(params[0], ERROR_ARRAY[count]) == 0) {
             return_value = (*ERROR_FUNC[count]) (params);
             return (return_value);
         }
@@ -43,8 +43,6 @@ int error_before_getline(char *path)
     for (int j = 0; line[j]; j++)
         if (strstr(line[j], ".comment") != NULL)
             count_comment++;
-    printf("name = %d\n", count_name);
-    printf("comment = %d\n", count_comment);
     if (count_name != 1 || count_comment != 1)
         return (84);
     return (0);

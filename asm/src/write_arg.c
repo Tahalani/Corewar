@@ -54,7 +54,7 @@ int write_total_arg(int fd, char **array_line, count_t *count_sruct)
             strcat(value_arg, "10");
         k++;
     }
-    for (unsigned int i = strlen(value_arg); i != 8; i++)
+    for (unsigned int i = my_strlen(value_arg); i != 8; i++)
        value_arg[i] = '0';
     for (int i = 0; i != 8; i++) {
         int nb_char = my_get_char_nbr(value_arg[i]);
@@ -66,7 +66,7 @@ int write_total_arg(int fd, char **array_line, count_t *count_sruct)
 int get_pos_label(int fd, count_t *count_sruct, char *array_line)
 {
     int c = -1;
-    printf("%s\n", array_line);
+
     count_sruct->byte += 2;
     write(fd, &c, 2);
     return (0);

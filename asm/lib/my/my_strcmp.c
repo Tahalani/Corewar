@@ -5,11 +5,15 @@
 ** Compare two strings
 */
 
-int my_strcmp(char *str1, char *str2)
+int my_strcmp(char const *s1, char const *s2)
 {
-    for (int i = 0; str1[i] != '\0'; i++) {
-        if (str1[i] != str2[i])
-            return (str1[i] - str2[i]);
+    int i = 0;
+
+    while (s1[i] != '\0' || s2[i] != '\0') {
+        if (s1[i] > s2[i] || s1[i] < s2[i])
+            return (1);
+        else
+            i++;
     }
     return (0);
 }

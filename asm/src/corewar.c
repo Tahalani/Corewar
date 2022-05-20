@@ -10,22 +10,31 @@
 #include "option_asm.h"
 #include "op.h"
 
-int handle_options(int fd, char *target, count_t *count_sruct)
+int condition_handle_option(int count,
+int fd, char *target, count_t *count_sruct)
 {
     int return_value = 0;
 
-    for (int count = 0; count != 16; count++) {
-        for (int i = 0; target[i] != '\0'; i++) {
-            if (target[i] == LABEL_CHAR && (target[i + 1] == '\n' ||
-            target[i + 1] == '\0'))
-                return (-1);
-        }
-        if (strcmp(target, OPT_ARRAY[count]) == 0) {
-            return_value = (*OPT_FUNC[count]) (fd, count_sruct);
-            return (2);
-        }
+    for (int i = 0; target[i] != '\0'; i++) {
+        if (target[i] == LABEL_CHAR && (target[i + 1] == '\n' ||
+        target[i + 1] == '\0'))
+            return (-1);
+    }
+    if (my_strcmp(target, OPT_ARRAY[count]) == 0) {
+        return_value = (*OPT_FUNC[count]) (fd, count_sruct);
+        return (2);
     }
     return (return_value);
+}
+
+int handle_options(int fd, char *target, count_t *count_sruct)
+{
+    int res_return = 0;
+
+    for (int count = 0; count != 16; count++) {
+        res_return = condition_handle_option(count, fd, target, count_sruct);
+    }
+    return (res_return);
 }
 
 int write_name_comment(header_t header, char *file)
@@ -38,6 +47,23 @@ int write_name_comment(header_t header, char *file)
     return (fd);
 }
 
+int loop_yolotron(char **array_line, int fd, count_t *count_sruct)
+{
+    static int check = 0;
+
+    for (unsigned int k = 0; array_line[k] != NULL; k++) {
+        check = handle_options(fd, array_line[k], count_sruct);
+        if (k == 0 && check != -1 && ((strstr(array_line[k], "zjmp") ==
+        NULL && (strstr(array_line[k], "live")) == NULL &&
+        (strstr(array_line[k], "fork")) == NULL && (strstr(array_line[k],
+        "lfork")) == NULL)))
+            write_total_arg(fd, array_line, count_sruct);
+        else if (k != 0)
+            write_arg(fd, array_line[k], array_line[0], count_sruct);
+    }
+    return (check);
+}
+
 int yolotron_asm(char *path, char **av)
 {
     header_t *header = malloc(sizeof(header_t));
@@ -45,7 +71,6 @@ int yolotron_asm(char *path, char **av)
     char **array = NULL;
     char **array_line = NULL;
     int fd = 0;
-    int check = 0;
     char *name_file = malloc(sizeof(char) * (my_strlen(av[1]) + 5));
 
     for (int i = 0; av[1][i] != '.' && av[1][i] != '\0'; i++)
@@ -57,19 +82,8 @@ int yolotron_asm(char *path, char **av)
         return (-1);
     for (unsigned int i = 0; array[i] != NULL; i++) {
         array_line = my_str_to_word_array(array[i], ' ');
-        for (int i = 0; array_line[i]; i++)
-            printf("non = %s\n", array_line[i]);
-        for (unsigned int k = 0; array_line[k] != NULL; k++) {
-            check = handle_options(fd, array_line[k], count_sruct);
-            if (k == 0 && check != -1 && ((strstr(array_line[k], "zjmp") ==
-            NULL && (strstr(array_line[k], "live")) == NULL &&
-            (strstr(array_line[k], "fork")) == NULL && (strstr(array_line[k],
-            "lfork")) == NULL)))
-                write_total_arg(fd, array_line, count_sruct);
-            else if (k != 0)
-                write_arg(fd, array_line[k], array_line[0], count_sruct);
-        }
+        loop_yolotron(array_line, fd, count_sruct);
     }
-    printf("header: [%d]\n", count_sruct->byte);
+    write_finally_prog_size(header, count_sruct, fd);
     return (0);
 }

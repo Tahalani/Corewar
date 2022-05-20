@@ -16,6 +16,7 @@ SRC			=		$(addsuffix .c, $(addprefix src/,		\
 					instruction/write_instruction3			\
 					instruction/write_instruction4			\
 					init_struct								\
+					init_struct_two							\
 					write_arg								\
 					my_str_to								\
 					error/error_one							\
@@ -31,6 +32,7 @@ SRCT		=		tests/tests_projet$(EXTENSION)			\
 					instruction/write_instruction3			\
 					instruction/write_instruction4			\
 					init_struct								\
+					init_struct_two							\
 					write_arg								\
 					my_str_to								\
 					error/error_one							\

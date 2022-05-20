@@ -12,17 +12,20 @@ int my_strlen(char const *str);
 
 char *my_strcat(char *dest, char const *src)
 {
-    int one = 0;
-    int two = 0;
+    char *result = malloc(sizeof(char) *
+        (my_strlen(dest) + my_strlen(src)) + 1);
+    int i = 0;
 
-    for (; dest[one] != '\0'; one++);
-    while (src[two] != '\0') {
-        dest[one + two] = src[two];
-        two++;
-    }
-    dest[one + two] = '\0';
-    return (dest);
+    if (result == NULL)
+        return (NULL);
+    for (; dest[i] != '\0'; i++)
+        result[i] = dest[i];
+    for (int count = 0; src[count] != '\0'; count++)
+        result[i + count] = src[count];
+    result[i + my_strlen(src)] = '\0';
+    return (result);
 }
+
 
 char *my_strconcat(char *dest, char const *src)
 {

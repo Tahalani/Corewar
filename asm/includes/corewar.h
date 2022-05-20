@@ -11,6 +11,7 @@
     #include <unistd.h>
     #include <stdlib.h>
     #include <stdio.h>
+    #include <stddef.h>
     #include <sys/types.h>
     #include <sys/stat.h>
     #include <fcntl.h>
@@ -47,6 +48,10 @@ static const struct arg_byte_s ARG[] = {
 };
 
 uint8_t *my_rev_bit(uint8_t *str, unsigned int len);
+
+int check_champ_info(header_t *header, int count, char **array);
+
+int write_finally_prog_size(header_t *header, count_t *count_sruct, int fd);
 
 int error_before_getline(char *path);
 

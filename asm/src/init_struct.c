@@ -10,57 +10,41 @@
 #include "op.h"
 #include <stdint.h>
 
-static int check_champ_info(header_t *header, int count, char **array)
-{
-    if (count == 0) {
-        memset(header->prog_name, 0, PROG_NAME_LENGTH);
-        strcpy(header->prog_name, array[1]);
-    }
-    if (count == 1) {
-        memset(header->comment, 0, COMMENT_LENGTH);
-        strcpy(header->comment, array[1]);
-        return (1);
-    }
-    return (84);
-}
-
-uint8_t *my_rev_bit(uint8_t *str, unsigned int len)
-{
-    uint8_t c;
-
-    for (unsigned int i = 0; i < len; i++, len--) {
-        c = str[i];
-        str[i] = str[len - 1];
-        str[len - 1] = c;
-    }
-    return (str);
-}
-
 static char **init_instruction(header_t *header, char *str, char **array)
 {
     header->magic = COREWAR_EXEC_MAGIC;
-    header->prog_size = 23;
+    header->prog_size = 0;
     my_rev_bit((uint8_t*)&header->magic, 4);
     my_rev_bit((uint8_t*)&header->prog_size, 4);
     array = str_to_word(str, '\n');
     return (array);
 }
 
-char **init_struct(header_t *header, char *path, int count, char **array)
+char *before_getline(char *str, FILE *fd, char *path)
 {
-    char *buffer = NULL;
-    size_t size = 0;
     struct stat stats;
-    FILE *fd = fopen(path, "r");
+
     if (stat(path, &stats) == -1)
         return (NULL);
-    char *str = malloc(sizeof(char) * (stats.st_size + 1));
-    ssize_t size_str = 0;
-
+    str = malloc(sizeof(char) * (stats.st_size + 1));
     str[0] = '\0';
     if (str == NULL || fd == NULL)
         return (NULL);
     if (error_before_getline(path) == 84)
+        return (NULL);
+    return (str);
+}
+
+char **init_struct(header_t *header, char *path, int count, char **array)
+{
+    char *buffer = NULL;
+    size_t size = 0;
+    FILE *fd = fopen(path, "r");
+    ssize_t size_str = 0;
+    char *str = NULL;
+
+    str = before_getline(str, fd, path);
+    if (str == NULL)
         return (NULL);
     while ((size_str = getline(&buffer, &size, fd)) > 0) {
         if (buffer == NULL)
