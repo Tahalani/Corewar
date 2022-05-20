@@ -80,7 +80,7 @@ int yolotron_asm(char *path, char **av)
     name_file = my_strcat(name_file, ".cor\0");
     if ((array = init_struct(header, path, 0, array)) == NULL)
         return (-1);
-    if ((fd = write_name_comment(header, name_file)) == -1)
+    if ((fd = write_name_comment(*header, name_file)) == -1)
         return (-1);
     for (unsigned int i = 0; array[i] != NULL; i++) {
         array_line = my_str_to_word_array(array[i], ',');
