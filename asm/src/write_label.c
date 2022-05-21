@@ -7,7 +7,6 @@
 
 #include "my.h"
 #include "corewar.h"
-#include "option_asm.h"
 #include "op.h"
 
 int write_label(int fd, count_t *count_sruct)
@@ -26,12 +25,12 @@ int write_label(int fd, count_t *count_sruct)
                 line_byte = my_getnbr(count_sruct->label_array[k + 1]);
                 check = 1;
             }
-            if (strstr(count_sruct->label_array[k], count_sruct->get_label[i]) != NULL) {
+            if (my_strstr(count_sruct->label_array[k],
+            count_sruct->get_label[i]) != NULL) {
                 label_byte = my_getnbr(count_sruct->label_array[k + 2]);
             }
         }
         final_label = label_byte - line_byte;
-        printf("%d\n", final_label);
         check = 0;
     }
     return(0);

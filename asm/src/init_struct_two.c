@@ -10,6 +10,19 @@
 #include "op.h"
 #include <stdint.h>
 
+char *init_struct_count(count_t *count_sruct, char *name_file, char **av)
+{
+    count_sruct->count_label = 0;
+    count_sruct->count_distance = 0;
+    count_sruct->label_array = malloc(sizeof(char *) * 500);
+    count_sruct->get_label = malloc(sizeof(char *) * 500);
+    name_file[my_strlen(av[1]) - 2] = '\0';
+    for (int i = 0; av[1][i] != '.' && av[1][i] != '\0'; i++)
+        name_file[i] = av[1][i];
+    name_file = my_strcat(name_file, ".cor\0");
+    return (name_file);
+}
+
 int check_champ_info(header_t *header, int count, char **array)
 {
     if (count == 0) {

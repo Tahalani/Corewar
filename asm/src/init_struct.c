@@ -57,7 +57,7 @@ char **init_struct(header_t *header, char *path, int count, char **array)
             return (NULL);
         check_champ_info(header, count, array);
         if (count >= 2)
-            strcat(str, buffer);
+            str = my_strcat(str, buffer);
         count++;
     }
     array = init_instruction(header, str, array);

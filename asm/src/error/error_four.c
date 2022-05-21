@@ -37,11 +37,11 @@ int error_before_getline(char *path)
     int count_comment = 0;
 
     for (int i = 0; line[i]; i++) {
-        if (strstr(line[i], ".name") != NULL)
+        if (my_strstr(line[i], ".name") != NULL)
             count_name++;
     }
     for (int j = 0; line[j]; j++)
-        if (strstr(line[j], ".comment") != NULL)
+        if (my_strstr(line[j], ".comment") != NULL)
             count_comment++;
     if (count_name != 1 || count_comment != 1)
         return (84);

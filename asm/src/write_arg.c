@@ -49,9 +49,9 @@ int write_total_arg(int fd, char **array_line, count_t *count_sruct)
     value_arg[0] = '\0';
     for (unsigned int i = 1; array_line[i] != NULL; i++) {
         if (array_line[i][0] == 'r')
-            strcat(value_arg, "01");
+            value_arg = my_strcat(value_arg, "01");
         else
-            strcat(value_arg, "10");
+            value_arg = my_strcat(value_arg, "10");
         k++;
     }
     for (unsigned int i = my_strlen(value_arg); i != 8; i++)

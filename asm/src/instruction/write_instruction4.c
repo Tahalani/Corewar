@@ -30,7 +30,6 @@ int write_register(int fd, char *post_register, count_t *count_sruct)
     }
     result = my_getnbr(after);
     count_sruct->byte++;
-    printf("ici = %s\n", after);
     if (result >= 1 && result <= REG_NUMBER)
         write(fd, &result, 1);
     else
@@ -50,7 +49,7 @@ int write_modulo(int fd, char *post_modulo, char *mnemonic, count_t *count_sruct
     }
     arg = my_getnbr(after);
     for (unsigned int i = 0; i != 16; i++) {
-        if (strstr(mnemonic, ARG[i].mnemonic) != NULL) {
+        if (my_strstr(mnemonic, ARG[i].mnemonic) != NULL) {
             count_sruct->byte += ARG[i].byte;
             my_rev_bit((void *)&arg, ARG[i].byte);
             write(fd, &arg, ARG[i].byte);
@@ -58,4 +57,20 @@ int write_modulo(int fd, char *post_modulo, char *mnemonic, count_t *count_sruct
         }
     }
     return (0);
+}
+
+int handle_options(int fd, char *target, count_t *count_sruct, int line, int k)
+{
+    int res_return = 0;
+
+    for (int count = 0; count != 16; count++) {
+        res_return = condition_handle_option(count, fd, target,
+        count_sruct, line, k);
+        if (res_return == -1) {
+            count_sruct->check = 0;
+            return (res_return);
+        }
+    }
+    count_sruct->check = 0;
+    return (res_return);
 }

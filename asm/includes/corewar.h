@@ -52,6 +52,11 @@ static const struct arg_byte_s ARG[] = {
     {"aff", DIR_SIZE},
 };
 
+char *init_struct_count(count_t *count_sruct, char *name_file, char **av);
+
+int condition_handle_option(int count,
+int fd, char *target, count_t *count_sruct, int line, int k);
+
 uint8_t *my_rev_bit(uint8_t *str, unsigned int len);
 
 int check_champ_info(header_t *header, int count, char **array);
