@@ -19,7 +19,7 @@ char *init_struct_count(count_t *count_sruct, char *name_file, char **av)
     name_file[my_strlen(av[1]) - 2] = '\0';
     for (int i = 0; av[1][i] != '.' && av[1][i] != '\0'; i++)
         name_file[i] = av[1][i];
-    name_file = my_strcat(name_file, ".cor\0");
+    name_file = my_strcat(name_file, ".lol\0");
     return (name_file);
 }
 

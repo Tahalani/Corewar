@@ -37,7 +37,8 @@ int write_register(int fd, char *post_register, count_t *count_sruct)
     return (0);
 }
 
-int write_modulo(int fd, char *post_modulo, char *mnemonic, count_t *count_sruct)
+int write_modulo(int fd, char *post_modulo,
+char *mnemonic, count_t *count_sruct)
 {
     int arg = 0;
     char *after = malloc(sizeof(char) * 4);
