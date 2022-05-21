@@ -71,11 +71,9 @@ int write_name_comment(header_t header, char *file)
 int loop_yolotron(char **array_line, int fd, count_t *count_sruct, int line)
 {
     static int check = 0;
+    int value_exit = 0;
 
     for (unsigned int k = 0; array_line[k] != NULL; k++) {
-        if (k == 0) {
-
-        }
         check = handle_options(fd, array_line[k], count_sruct, line, k);
         if (k == 0 && check != -1 && ((strstr(array_line[k], "zjmp") ==
         NULL && (strstr(array_line[k], "live")) == NULL &&
@@ -83,7 +81,9 @@ int loop_yolotron(char **array_line, int fd, count_t *count_sruct, int line)
         "lfork")) == NULL)))
             write_total_arg(fd, array_line, count_sruct);
         else if (k != 0)
-            write_arg(fd, array_line[k], array_line[0], count_sruct, line);
+            value_exit = write_arg(fd, array_line[k], array_line[0], count_sruct, line);
+        if (value_exit == 84)
+            return (84);
     }
     return (check);
 }
@@ -112,7 +112,8 @@ int yolotron_asm(char *path, char **av)
         return (-1);
     for (unsigned int i = 0; array[i] != NULL; i++) {
         array_line = my_str_to_word_array(array[i], ' ');
-        loop_yolotron(array_line, fd, count_sruct, i);
+        if (loop_yolotron(array_line, fd, count_sruct, i) == 84)
+            return (-1);
     }
     write_label(fd, count_sruct);
     write_finally_prog_size(header, count_sruct, fd);

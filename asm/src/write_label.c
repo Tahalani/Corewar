@@ -15,6 +15,7 @@ int write_label(int fd, count_t *count_sruct)
     int label_byte = 0;
     int line_byte = 0;
     int check = 0;
+    int final_label = 0;
 
     count_sruct->label_array[count_sruct->count_label] = NULL;
     count_sruct->get_label[count_sruct->count_distance] = NULL;
@@ -24,15 +25,13 @@ int write_label(int fd, count_t *count_sruct)
             my_getnbr(count_sruct->label_array[k]) && check == 0) {
                 line_byte = my_getnbr(count_sruct->label_array[k + 1]);
                 check = 1;
-                printf("line_byte: [%d]\n", line_byte);
             }
             if (strstr(count_sruct->label_array[k], count_sruct->get_label[i]) != NULL) {
                 label_byte = my_getnbr(count_sruct->label_array[k + 2]);
-                printf("label_byte [%d]\n", label_byte);
             }
         }
-        printf("final_value = [%d]\n", label_byte - line_byte);
-        printf("\n\n");
+        final_label = label_byte - line_byte;
+        printf("%d\n", final_label);
         check = 0;
     }
     return(0);

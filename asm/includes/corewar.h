@@ -77,9 +77,9 @@ count_t *count_sruct, int line);
 
 char **str_to_word(char const *str, char separator);
 
-int write_modulo(int fd, int post_modulo, char *mnemonic, count_t *count_sruct);
+int write_modulo(int fd, char *, char *mnemonic, count_t *count_sruct);
 
-int handle_options(int fd, char *array, count_t *count_sruct, int line, int k);
+int handle_options(int fd, char *, count_t *count_sruct, int line, int k);
 
 int yolotron(char *path);
 
@@ -121,7 +121,7 @@ int write_lfork(int fd, count_t *count_sruct);
 
 int write_aff(int fd, count_t *count_sruct);
 
-int write_register(int fd, int post_register, count_t *count_sruct);
+int write_register(int fd, char *post_register, count_t *count_sruct);
 
 char **init_struct(header_t *header, char *path, int count, char **array);
 

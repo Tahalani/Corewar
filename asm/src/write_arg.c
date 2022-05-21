@@ -82,11 +82,15 @@ int get_pos_label(int fd, count_t *count_sruct, char *array_line, int line)
 int write_arg(int fd, char *array_line, char *mnemonic,
 count_t *count_sruct, int line)
 {
+    int return_val = 0;
+
     for (unsigned int i = 0; array_line[i] != '\0'; i++) {
         if (array_line[i] == 'r')
-            write_register(fd, ATOD(array_line[i + 1]), count_sruct);
+            return_val = write_register(fd, array_line, count_sruct);
+        if (return_val == 84)
+            return (84);
         if (array_line[i] == DIRECT_CHAR && array_line[i + 1] != LABEL_CHAR)
-            write_modulo(fd, ATOD(array_line[i + 1]), mnemonic, count_sruct);
+            write_modulo(fd, array_line, mnemonic, count_sruct);
         if (array_line[i] == DIRECT_CHAR && array_line[i + 1] == LABEL_CHAR)
             get_pos_label(fd, count_sruct, &array_line[3], line);
     }
