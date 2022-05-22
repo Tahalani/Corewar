@@ -47,15 +47,14 @@ int write_total_arg(int fd, char **array_line, count_t *count_sruct)
     unsigned int k = 0;
 
     value_arg[0] = '\0';
-    for (unsigned int i = 1; array_line[i] != NULL; i++) {
+    for (unsigned int i = 1; array_line[i] != NULL; i++, k++) {
         if (array_line[i][0] == 'r')
-            strcat(value_arg, "01");
+            value_arg = my_strcat(value_arg, "01");
         else
-            strcat(value_arg, "10");
-        k++;
+            value_arg = my_strcat(value_arg, "10");
     }
     for (unsigned int i = my_strlen(value_arg); i != 8; i++)
-       value_arg[i] = '0';
+        value_arg[i] = '0';
     for (int i = 0; i != 8; i++) {
         int nb_char = my_get_char_nbr(value_arg[i]);
         write_bite(nb_char, fd, count_sruct);
@@ -63,24 +62,40 @@ int write_total_arg(int fd, char **array_line, count_t *count_sruct)
     return (0);
 }
 
-int get_pos_label(int fd, count_t *count_sruct, char *array_line)
+int get_pos_label(int fd, count_t *count_sruct, char *array_line, int line)
 {
     int c = -1;
+    char *line_str = NULL;
+    char *byte = NULL;
 
+    count_sruct->get_label[count_sruct->count_distance] = array_line;
+    line_str = int_to_str(line);
+    byte = int_to_str(count_sruct->byte);
+    if (line_str[0] == '\0')
+        line_str[0] = '0';
+    if (byte[0] == '\0')
+        byte[0] = '0';
+    count_sruct->get_label[count_sruct->count_distance + 1] = line_str;
+    count_sruct->get_label[count_sruct->count_distance + 2] = byte;
+    count_sruct->count_distance += 3;
     count_sruct->byte += 2;
     write(fd, &c, 2);
     return (0);
 }
 
-int write_arg(int fd, char *array_line, char *mnemonic, count_t *count_sruct)
+int write_arg(int fd, char *array_line, char *mnemonic, count_t *co, int line)
 {
+    int return_val = 0;
+
     for (unsigned int i = 0; array_line[i] != '\0'; i++) {
         if (array_line[i] == 'r')
-            write_register(fd, ATOD(array_line[i + 1]), count_sruct);
+            return_val = write_register(fd, array_line, co);
+        if (return_val == 84)
+            return (84);
         if (array_line[i] == DIRECT_CHAR && array_line[i + 1] != LABEL_CHAR)
-            write_modulo(fd, ATOD(array_line[i + 1]), mnemonic, count_sruct);
+            write_modulo(fd, array_line, mnemonic, co);
         if (array_line[i] == DIRECT_CHAR && array_line[i + 1] == LABEL_CHAR)
-            get_pos_label(fd, count_sruct, array_line);
+            get_pos_label(fd, co, &array_line[3], line);
     }
     return (0);
 }

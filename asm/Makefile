@@ -19,6 +19,8 @@ SRC			=		$(addsuffix .c, $(addprefix src/,		\
 					init_struct_two							\
 					write_arg								\
 					my_str_to								\
+					int_to_str								\
+					write_label								\
 					error/error_one							\
 					error/error_two							\
 					error/error_three						\

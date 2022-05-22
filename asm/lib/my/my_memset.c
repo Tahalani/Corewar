@@ -7,13 +7,12 @@
 
 #include <stdlib.h>
 
-char *my_memset(char c, int n)
+void *my_memset(char *str, int c, int n)
 {
-    char *res = malloc(sizeof(char) * (n + 1));
     int i = 0;
 
     for (i = 0; i != n; i++)
-        res[i] = c;
-    res[i + 1] = 0;
-    return res;
+        str[i] = c;
+    str[n] = '\0';
+    return (str);
 }

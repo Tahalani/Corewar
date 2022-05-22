@@ -21,6 +21,12 @@
 
 typedef struct count_s {
     int byte;
+    char **label_array;
+    int count_label;
+    char **get_label;
+    int count_distance;
+    int check;
+    int size;
 } count_t;
 
 typedef struct arg_byte_s {
@@ -47,6 +53,11 @@ static const struct arg_byte_s ARG[] = {
     {"aff", DIR_SIZE},
 };
 
+char *init_struct_count(count_t *count_sruct, char *name_file, char **av);
+
+int condition_handle_option(int count,
+int fd, char *target, count_t *co, int line, int k);
+
 uint8_t *my_rev_bit(uint8_t *str, unsigned int len);
 
 int check_champ_info(header_t *header, int count, char **array);
@@ -63,15 +74,17 @@ int without_padding(void);
 
 int with_padding(void);
 
+char *int_to_str(int number);
+
 int write_total_arg(int fd, char **array_line, count_t *count_sruct);
 
-int write_arg(int fd, char *array_line, char *mnemonic, count_t *count_sruct);
+int write_arg(int fd, char *array_line, char *mnemonic, count_t *co, int line);
 
 char **str_to_word(char const *str, char separator);
 
-int write_modulo(int fd, int post_modulo, char *mnemonic, count_t *count_sruct);
+int write_modulo(int fd, char *post_modulo, char *mnemonic, count_t *co);
 
-int handle_options(int fd, char *array, count_t *count_sruct);
+int handle_options(int fd, char *, count_t *count_sruct, int line, int k);
 
 int yolotron(char *path);
 
@@ -90,6 +103,8 @@ int write_sub(int fd, count_t *count_sruct);
 int write_and(int fd, count_t *count_sruct);
 
 int write_aff(int fd, count_t *count_sruct);
+
+int write_label(int fd, count_t *count_sruct);
 
 int write_or(int fd, count_t *count_sruct);
 
@@ -111,7 +126,7 @@ int write_lfork(int fd, count_t *count_sruct);
 
 int write_aff(int fd, count_t *count_sruct);
 
-int write_register(int fd, int post_register, count_t *count_sruct);
+int write_register(int fd, char *post_register, count_t *count_sruct);
 
 char **init_struct(header_t *header, char *path, int count, char **array);
 

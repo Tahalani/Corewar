@@ -20,7 +20,7 @@ static char **init_instruction(header_t *header, char *str, char **array)
     return (array);
 }
 
-char *before_getline(char *str, FILE *fd, char *path, header_t *header)
+char *before_getline(char *str, FILE *fd, char *path)
 {
     struct stat stats;
 
@@ -43,7 +43,7 @@ char **init_struct(header_t *header, char *path, int count, char **array)
     ssize_t size_str = 0;
     char *str = NULL;
 
-    str = before_getline(str, fd, path, header);
+    str = before_getline(str, fd, path);
     if (str == NULL)
         return (NULL);
     while ((size_str = getline(&buffer, &size, fd)) > 0) {
@@ -57,7 +57,7 @@ char **init_struct(header_t *header, char *path, int count, char **array)
             return (NULL);
         check_champ_info(header, count, array);
         if (count >= 2)
-            strcat(str, buffer);
+            str = my_strcat(str, buffer);
         count++;
     }
     array = init_instruction(header, str, array);

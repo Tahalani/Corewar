@@ -25,6 +25,8 @@ char *my_strcapitalize(char *str);
 
 char *my_strncpy(char *dest, char const *src, int n);
 
+void *my_memset(char *str, int c, int n);
+
 char *my_strcat(char *dest, char const *src);
 
 char *my_putnbr_base(int nbr, char *base);
@@ -54,6 +56,8 @@ int my_strlen(char const *str);
 int my_getnbr(char const *str);
 
 int my_str_isalpha(char const *str);
+
+char *my_strstr(char const *str, char const *to_find);
 
 int my_str_isnum(char const *str);
 
