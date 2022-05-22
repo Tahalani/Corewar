@@ -26,20 +26,20 @@ int my_extensioncmp(char *str1, char *str2, int size_cmp)
 int initialize_option(champion_t *champion, int ac, char **av, int i)
 {
     champion->file_name = my_strdup(av[i]);
-    champion->prog_nbr = 0;
-    champion->adress = -1;
-    champion->is_valid = -1;
     int fd = open(av[i], O_RDONLY);
+    struct_init(champion);
     if (fd == -1) {
         close(fd);
         return 84;
     }
+    close(fd);
     if (get_prog_nbr(champion, ac, av, i) == 84)
         return 84;
     if (get_champ_adress(champion, av, i) == 84)
         return 84;
+    if (parsing_file(champion, av[i]) == 84)
+        return 84;
     champion->is_valid = 1;
-    close(fd);
     return 0;
 }
 
@@ -70,7 +70,7 @@ champion_t *parsing_argument(int ac, char **av, corewar_t *corewar)
     corewar->nbr_dump = 1536;
 
     count_nbr_champ(av, &nbr_champion, ac, corewar);
-    if (nbr_champion == 0)
+    if (nbr_champion != 2)
         return NULL;
     champion_t *champion = malloc(sizeof(champion_t) * (nbr_champion));
     for (int i = 1; i < ac; i++) {
@@ -83,15 +83,6 @@ champion_t *parsing_argument(int ac, char **av, corewar_t *corewar)
     if (set_random_number_adress(corewar, champion) == 84) {
         free_struct(*corewar, champion);
         return NULL;
-    }
-    for (int i = 0; i < nbr_champion; i++) {
-        printf("%s\n", champion[i].file_name);
-        printf("%i\n", champion[i].prog_nbr);
-        printf("name %s\n", champion[i].file_name);
-        printf("number %i\n", champion[i].prog_nbr);
-        printf("adress %i\n", champion[i].adress);
-        printf("valid ? : %i\n", champion[i].is_valid);
-        printf("val de dump_nbr ? : %i\n", corewar->nbr_dump);
     }
     return champion;
 }

@@ -28,7 +28,7 @@ corewar_t *corewar, int *cpt_player)
         } else {
             champion[*i].prog_nbr = *cpt_player;
             *cpt_player += 1;
-        }  
+        }
     }
 }
 
@@ -37,7 +37,7 @@ int compare_same_value(champion_t *champion, corewar_t *corewar, int nbr)
     int cpt = 0;
 
     for (int j = 0; j < corewar->nbr_champ; j++) {
-        if (champion[j].prog_nbr == nbr)
+        if (champion[j].prog_nbr == nbr || champion[j].prog_nbr < 0)
             cpt++;
     }
     return (cpt == 1) ? 0 : 84;
@@ -50,7 +50,7 @@ int set_random_number_adress(corewar_t *corewar, champion_t *champion)
     for (int i = 0; i < corewar->nbr_champ; i++) {
         if (champion[i].is_valid == -1)
             return 84;
-        if (champion[i].prog_nbr != -1 &&
+        if (champion[i].prog_nbr != 0 &&
         compare_same_value(champion, corewar, champion[i].prog_nbr) == 84)
             return 84;
         verif_if_number_already_exist(champion, &i, corewar, &cpt_player);

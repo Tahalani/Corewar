@@ -17,3 +17,15 @@ int get_champ_adress(champion_t *champion, char **av, int i)
         champion->adress = my_getnbr(av[i - 1]);
     return 0;
 }
+
+void struct_init(champion_t *champion)
+{
+    for (int i = 0; i < REG_NUMBER; i++)
+        champion->reg[i] = 0;
+    champion->carry = 0;
+    champion->prog_nbr = 0;
+    champion->living = 0;
+    champion->waiting = 0;
+    champion->adress = -1;
+    champion->is_valid = -1;
+}

@@ -2,20 +2,14 @@
 ** EPITECH PROJECT, 2022
 ** corewar
 ** File description:
-** main
+** mem_func
 */
 
-#include <stdlib.h>
+#include "corewar.h"
+#include "my.h"
 #include "op.h"
-#include <unistd.h>
-#include <stdint.h>
 
-void my_putchar(char c)
-{
-    write(1, &c, 1);
-}
-
-void my_put_hex(long long unsigned int nb)
+static void my_put_hex(long long unsigned int nb)
 {
     if (nb / 16 != 0)
         my_put_hex(nb / 16);
@@ -27,13 +21,6 @@ void my_put_hex(long long unsigned int nb)
 
 void show_mem(uint8_t *mem)
 {
-    for (int i = 0; i < 48; i++) {
-        if (i < 16)
-            write(1, "0", 1);
-        my_put_hex(i);
-        write(1, " ", 1);
-    }
-    write(1, "\n", 1);
     for (int i = 0; i < MEM_SIZE; i++) {
         if (i % 48 == 0 && i != 0)
             write(1, "\n", 1);
@@ -44,11 +31,32 @@ void show_mem(uint8_t *mem)
     }
 }
 
-int main(void)
+uint8_t *mem_alloc(void)
 {
     uint8_t *mem = malloc(MEM_SIZE);
     for (int i = 0; i < MEM_SIZE; i++)
         mem[i] = 0;
+    return mem;
     show_mem(mem);
 }
 
+int insert_mem(uint8_t *mem, champion_t *champion)
+{
+    int size_total_champ = champion[0].header.prog_size +
+    champion[1].header.prog_size;
+
+    if (size_total_champ >= MEM_SIZE)
+        return 84;
+    verif_adress(mem, champion);
+    if (insert_champ(mem, champion) == 84)
+        return 84;
+    return 0;
+}
+
+void free_struct(corewar_t corewar, champion_t *champion)
+{
+    for (int i = 0; i < corewar.nbr_champ; i++){
+        free(champion[i].file_name);
+    }
+    free(champion);
+}

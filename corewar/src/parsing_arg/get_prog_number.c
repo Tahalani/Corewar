@@ -24,5 +24,6 @@ int get_prog_nbr(champion_t *champion, int ac, char **av, int i)
         } else
             return 84;
     }
+    champion->reg[1] = champion->prog_nbr;
     return 0;
 }
