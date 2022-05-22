@@ -67,13 +67,18 @@ int get_pos_label(int fd, count_t *count_sruct, char *array_line, int line)
 {
     int c = -1;
     char *line_str = NULL;
+    char *byte = NULL;
 
     count_sruct->get_label[count_sruct->count_distance] = array_line;
     line_str = int_to_str(line);
-        if (line_str[0] == '\0')
-            line_str[0] = '0';
+    byte = int_to_str(count_sruct->byte);
+    if (line_str[0] == '\0')
+        line_str[0] = '0';
+    if (byte[0] == '\0')
+        byte[0] = '0';
     count_sruct->get_label[count_sruct->count_distance + 1] = line_str;
-    count_sruct->count_distance += 2;
+    count_sruct->get_label[count_sruct->count_distance + 2] = byte;
+    count_sruct->count_distance += 3;
     count_sruct->byte += 2;
     write(fd, &c, 2);
     return (0);

@@ -100,7 +100,7 @@ int yolotron_asm(char *path, char **av)
         if (loop_yolotron(array_line, fd, count_sruct, i) == 84)
             return (-1);
     }
-    write_label(fd, count_sruct);
+    write_label(fd, count_sruct, header);
     write_finally_prog_size(header, count_sruct, fd);
     return (0);
 }

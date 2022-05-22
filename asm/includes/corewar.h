@@ -26,6 +26,7 @@ typedef struct count_s {
     char **get_label;
     int count_distance;
     int check;
+    int size;
 } count_t;
 
 typedef struct arg_byte_s {
@@ -104,7 +105,7 @@ int write_and(int fd, count_t *count_sruct);
 
 int write_aff(int fd, count_t *count_sruct);
 
-int write_label(int fd, count_t *count_sruct);
+int write_label(int fd, count_t *count_sruct, header_t *header);
 
 int write_or(int fd, count_t *count_sruct);
 
