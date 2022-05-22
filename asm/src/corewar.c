@@ -32,7 +32,8 @@ char *loop_in_condition_option(int k, count_t *co, char *target, int *line)
     return (target);
 }
 
-int condition_handle_option(int count, int fd, char *target, count_t *co, int line, int k)
+int condition_handle_option(int count,
+int fd, char *target, count_t *co, int line, int k)
 {
     int return_value = 0;
 
