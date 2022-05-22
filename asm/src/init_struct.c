@@ -31,6 +31,15 @@ char *before_getline(char *str, FILE *fd, char *path)
     return (str);
 }
 
+int init_sctuct2(char **array, char *buffer, int count, header_t *header)
+{
+    array = str_to_word(buffer, '"');
+    if (error_handling(buffer) == 84)
+        return (-1);
+    check_champ_info(header, count, array);
+    return (0);
+}
+
 char **init_struct(header_t *header, char *path, int count, char **array)
 {
     char *buffer = NULL;
@@ -39,8 +48,7 @@ char **init_struct(header_t *header, char *path, int count, char **array)
     ssize_t size_str = 0;
     char *str = NULL;
 
-    str = before_getline(str, fd, path);
-    if (str == NULL)
+    if ((str = before_getline(str, fd, path)) == NULL)
         return (NULL);
     while ((size_str = getline(&buffer, &size, fd)) > 0) {
         if (buffer == NULL)
@@ -48,10 +56,8 @@ char **init_struct(header_t *header, char *path, int count, char **array)
         if (buffer[0] == COMMENT_CHAR)
             continue;
         buffer[size_str] = '\0';
-        array = str_to_word(buffer, '"');
-        if (error_handling(buffer) == 84)
+        if (init_sctuct2(array, buffer, count, header) == -1)
             return (NULL);
-        check_champ_info(header, count, array);
         if (count >= 2)
             str = my_strcat(str, buffer);
         count++;

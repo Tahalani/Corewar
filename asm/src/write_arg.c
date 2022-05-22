@@ -83,7 +83,7 @@ int get_pos_label(int fd, count_t *count_sruct, char *array_line, int line)
     return (0);
 }
 
-int write_arg(int fd, char *array_line, char *mnemonic, count_t *co, int line)
+int write_arg(int fd, char *array_line, char *mnemonic, count_t *co)
 {
     int return_val = 0;
 
@@ -95,7 +95,7 @@ int write_arg(int fd, char *array_line, char *mnemonic, count_t *co, int line)
         if (array_line[i] == DIRECT_CHAR && array_line[i + 1] != LABEL_CHAR)
             write_modulo(fd, array_line, mnemonic, co);
         if (array_line[i] == DIRECT_CHAR && array_line[i + 1] == LABEL_CHAR)
-            get_pos_label(fd, co, &array_line[3], line);
+            get_pos_label(fd, co, &array_line[3], co->line);
     }
     return (0);
 }

@@ -8,8 +8,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void my_putchar(char c);
 int my_strlen(char const *str);
+void my_putchar(char c);
 
 void my_put_nbr(int nb)
 {

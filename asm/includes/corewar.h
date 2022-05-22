@@ -27,6 +27,8 @@ typedef struct count_s {
     int count_distance;
     int check;
     int size;
+    int line;
+    int k;
 } count_t;
 
 typedef struct arg_byte_s {
@@ -56,7 +58,7 @@ static const struct arg_byte_s ARG[] = {
 char *init_struct_count(count_t *count_sruct, char *name_file, char **av);
 
 int condition_handle_option(int count,
-int fd, char *target, count_t *co, int line, int k);
+int fd, char *target, count_t *co);
 
 uint8_t *my_rev_bit(uint8_t *str, unsigned int len);
 
@@ -78,13 +80,13 @@ char *int_to_str(int number);
 
 int write_total_arg(int fd, char **array_line, count_t *count_sruct);
 
-int write_arg(int fd, char *array_line, char *mnemonic, count_t *co, int line);
+int write_arg(int fd, char *array_line, char *mnemonic, count_t *co);
 
 char **str_to_word(char const *str, char separator);
 
 int write_modulo(int fd, char *post_modulo, char *mnemonic, count_t *co);
 
-int handle_options(int fd, char *, count_t *count_sruct, int line, int k);
+int handle_options(int fd, char *, count_t *count_sruct, int k);
 
 int yolotron(char *path);
 

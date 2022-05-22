@@ -26,7 +26,6 @@ char *my_strcat(char *dest, char const *src)
     return (result);
 }
 
-
 char *my_strconcat(char *dest, char const *src)
 {
     int one = my_strlen(dest);

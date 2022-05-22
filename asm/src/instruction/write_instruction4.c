@@ -59,13 +59,13 @@ int write_modulo(int fd, char *post_modulo, char *mnemonic, count_t *co)
     return (0);
 }
 
-int handle_options(int fd, char *target, count_t *count_sruct, int line, int k)
+int handle_options(int fd, char *target, count_t *count_sruct, int k)
 {
     int res_return = 0;
 
+    count_sruct->k = k;
     for (int count = 0; count != 16; count++) {
-        res_return = condition_handle_option(count, fd, target,
-        count_sruct, line, k);
+        res_return = condition_handle_option(count, fd, target, count_sruct);
         if (res_return == -1) {
             count_sruct->check = 0;
             return (res_return);

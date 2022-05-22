@@ -32,13 +32,12 @@ char *loop_in_condition_option(int k, count_t *co, char *target, int *line)
     return (target);
 }
 
-int condition_handle_option(int count,
-int fd, char *target, count_t *co, int line, int k)
+int condition_handle_option(int count, int fd, char *target, count_t *co)
 {
     int return_value = 0;
 
     for (int i = 0; target[i] != '\0'; i++) {
-        target = loop_in_condition_option(k, co, target, &line);
+        target = loop_in_condition_option(co->k, co, target, &co->line);
         if (target[i] == LABEL_CHAR && (target[i + 1] == '\n' ||
         target[i + 1] == '\0'))
             return (-1);
@@ -66,15 +65,18 @@ int loop_yolotron(char **array_line, int fd, count_t *count_sruct, int line)
     int value_exit = 0;
 
     for (unsigned int k = 0; array_line[k] != NULL; k++) {
-        check = handle_options(fd, array_line[k], count_sruct, line, k);
+        count_sruct->line = line;
+        check = handle_options(fd, array_line[k], count_sruct, k);
         if (k == 0 && check != -1 && ((my_strstr(array_line[k], "zjmp") ==
         NULL && (my_strstr(array_line[k], "live")) == NULL &&
         (my_strstr(array_line[k], "fork")) == NULL && (my_strstr(array_line[k],
         "lfork")) == NULL)))
             write_total_arg(fd, array_line, count_sruct);
-        else if (k != 0)
+        else if (k != 0) {
+            count_sruct->line = line;
             value_exit = write_arg
-            (fd, array_line[k], array_line[0], count_sruct, line);
+            (fd, array_line[k], array_line[0], count_sruct);
+        }
         if (value_exit == 84)
             return (84);
     }
