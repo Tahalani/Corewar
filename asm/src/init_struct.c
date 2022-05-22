@@ -22,11 +22,7 @@ static char **init_instruction(header_t *header, char *str, char **array)
 
 char *before_getline(char *str, FILE *fd, char *path)
 {
-    struct stat stats;
-
-    if (stat(path, &stats) == -1)
-        return (NULL);
-    str = malloc(sizeof(char) * (stats.st_size + 1));
+    str = malloc(sizeof(char) * (4000));
     str[0] = '\0';
     if (str == NULL || fd == NULL)
         return (NULL);

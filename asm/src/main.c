@@ -19,22 +19,34 @@ char *create_real_file(char **av)
     return (name_file);
 }
 
+ssize_t my_file_in_str_main(char *filepath)
+{
+    int fd = open(filepath, O_RDONLY);
+    char *buffer;
+    ssize_t size_real_buff;
+
+    buffer = malloc(sizeof(char) * (4000));
+    size_real_buff = read(fd, buffer, 4000);
+    close(fd);
+    return (size_real_buff);
+}
+
 int condition_good_result(char **av)
 {
-    struct stat stats;
     char *real_file = NULL;
     char *name_file = malloc(sizeof(char) * (my_strlen(av[1]) + 3));
     char *name_buffer = create_real_file(av);
     int fd = 0;
+    ssize_t size_real_buff;
 
     real_file = my_file_in_str(name_buffer);
+    size_real_buff = my_file_in_str_main(name_buffer);
     name_file[my_strlen(av[1]) - 2] = '\0';
     for (int i = 0; av[1][i] != '.' && av[1][i] != '\0'; i++)
         name_file[i] = av[1][i];
     name_file = my_strcat(name_file, ".cor\0");
-    stat(name_buffer, &stats);
     fd = open(name_file, O_CREAT | O_RDWR, S_IRUSR | S_IRGRP | S_IROTH);
-    write(fd, real_file, stats.st_size);
+    write(fd, real_file, size_real_buff);
     return (0);
 }
 
