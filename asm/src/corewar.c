@@ -10,31 +10,43 @@
 #include "option_asm.h"
 #include "op.h"
 
-int condition_handle_option(int count,
-int fd, char *target, count_t *count_sruct)
+char *loop_in_condition_option(int k, count_t *co, char *target, int *line)
+{
+    char *count_byte = NULL;
+    char *line_str = NULL;
+
+    if (k == 0 && co->check != 1) {
+        co->label_array[co->count_label] = target;
+        count_byte = int_to_str(co->byte);
+        line_str = int_to_str(*line);
+        if (count_byte[0] == '\0')
+            count_byte[0] = '0';
+        if (line_str[0] == '\0')
+            line_str[0] = '0';
+        co->label_array[co->count_label + 1] = line_str;
+        co->label_array[co->count_label + 2]
+        = count_byte;
+        co->count_label += 3;
+        co->check = 1;
+    }
+    return (target);
+}
+
+int condition_handle_option(int count, int fd, char *target, count_t *co, int line, int k)
 {
     int return_value = 0;
 
     for (int i = 0; target[i] != '\0'; i++) {
+        target = loop_in_condition_option(k, co, target, &line);
         if (target[i] == LABEL_CHAR && (target[i + 1] == '\n' ||
         target[i + 1] == '\0'))
             return (-1);
     }
     if (my_strcmp(target, OPT_ARRAY[count]) == 0) {
-        return_value = (*OPT_FUNC[count]) (fd, count_sruct);
+        return_value = (*OPT_FUNC[count]) (fd, co);
         return (2);
     }
     return (return_value);
-}
-
-int handle_options(int fd, char *target, count_t *count_sruct)
-{
-    int res_return = 0;
-
-    for (int count = 0; count != 16; count++) {
-        res_return = condition_handle_option(count, fd, target, count_sruct);
-    }
-    return (res_return);
 }
 
 int write_name_comment(header_t header, char *file)
@@ -47,19 +59,23 @@ int write_name_comment(header_t header, char *file)
     return (fd);
 }
 
-int loop_yolotron(char **array_line, int fd, count_t *count_sruct)
+int loop_yolotron(char **array_line, int fd, count_t *count_sruct, int line)
 {
     static int check = 0;
+    int value_exit = 0;
 
     for (unsigned int k = 0; array_line[k] != NULL; k++) {
-        check = handle_options(fd, array_line[k], count_sruct);
-        if (k == 0 && check != -1 && ((strstr(array_line[k], "zjmp") ==
-        NULL && (strstr(array_line[k], "live")) == NULL &&
-        (strstr(array_line[k], "fork")) == NULL && (strstr(array_line[k],
+        check = handle_options(fd, array_line[k], count_sruct, line, k);
+        if (k == 0 && check != -1 && ((my_strstr(array_line[k], "zjmp") ==
+        NULL && (my_strstr(array_line[k], "live")) == NULL &&
+        (my_strstr(array_line[k], "fork")) == NULL && (my_strstr(array_line[k],
         "lfork")) == NULL)))
             write_total_arg(fd, array_line, count_sruct);
         else if (k != 0)
-            write_arg(fd, array_line[k], array_line[0], count_sruct);
+            value_exit = write_arg
+            (fd, array_line[k], array_line[0], count_sruct, line);
+        if (value_exit == 84)
+            return (84);
     }
     return (check);
 }
@@ -72,20 +88,18 @@ int yolotron_asm(char *path, char **av)
     char **array_line = NULL;
     int fd = 0;
     char *name_file = malloc(sizeof(char) * (my_strlen(av[1]) + 3));
-    int i = 0;
-    name_file[my_strlen(av[1]) - 2] = '\0';
 
-    for (; av[1][i] != '.' && av[1][i] != '\0'; i++)
-        name_file[i] = av[1][i];
-    name_file = my_strcat(name_file, ".cor\0");
+    name_file = init_struct_count(count_sruct, name_file, av);
     if ((array = init_struct(header, path, 0, array)) == NULL)
         return (-1);
     if ((fd = write_name_comment(*header, name_file)) == -1)
         return (-1);
     for (unsigned int i = 0; array[i] != NULL; i++) {
-        array_line = my_str_to_word_array(array[i], ',');
-        loop_yolotron(array_line, fd, count_sruct);
+        array_line = my_str_to_word_array(array[i], ' ');
+        if (loop_yolotron(array_line, fd, count_sruct, i) == 84)
+            return (-1);
     }
+    write_label(fd, count_sruct);
     write_finally_prog_size(header, count_sruct, fd);
     return (0);
 }
