@@ -26,11 +26,11 @@ char *init_struct_count(count_t *count_sruct, char *name_file, char **av)
 int check_champ_info(header_t *header, int count, char **array)
 {
     if (count == 0) {
-        memset(header->prog_name, 0, PROG_NAME_LENGTH);
+        my_memset(header->prog_name, 0, PROG_NAME_LENGTH);
         my_strcpy(header->prog_name, array[1]);
     }
     if (count == 1) {
-        memset(header->comment, 0, COMMENT_LENGTH);
+        my_memset(header->comment, 0, COMMENT_LENGTH);
         my_strcpy(header->comment, array[1]);
         return (1);
     }

@@ -56,7 +56,7 @@ static const struct arg_byte_s ARG[] = {
 char *init_struct_count(count_t *count_sruct, char *name_file, char **av);
 
 int condition_handle_option(int count,
-int fd, char *target, count_t *count_sruct, int line, int k);
+int fd, char *target, count_t *co, int line, int k);
 
 uint8_t *my_rev_bit(uint8_t *str, unsigned int len);
 
@@ -78,12 +78,11 @@ char *int_to_str(int number);
 
 int write_total_arg(int fd, char **array_line, count_t *count_sruct);
 
-int write_arg(int fd, char *array_line, char *mnemonic,
-count_t *count_sruct, int line);
+int write_arg(int fd, char *array_line, char *mnemonic, count_t *co, int line);
 
 char **str_to_word(char const *str, char separator);
 
-int write_modulo(int fd, char *, char *mnemonic, count_t *count_sruct);
+int write_modulo(int fd, char *post_modulo, char *mnemonic, count_t *co);
 
 int handle_options(int fd, char *, count_t *count_sruct, int line, int k);
 
@@ -105,7 +104,7 @@ int write_and(int fd, count_t *count_sruct);
 
 int write_aff(int fd, count_t *count_sruct);
 
-int write_label(int fd, count_t *count_sruct, header_t *header);
+int write_label(int fd, count_t *count_sruct);
 
 int write_or(int fd, count_t *count_sruct);
 

@@ -37,8 +37,7 @@ int write_register(int fd, char *post_register, count_t *count_sruct)
     return (0);
 }
 
-int write_modulo(int fd, char *post_modulo,
-char *mnemonic, count_t *count_sruct)
+int write_modulo(int fd, char *post_modulo, char *mnemonic, count_t *co)
 {
     int arg = 0;
     char *after = malloc(sizeof(char) * 4);
@@ -51,7 +50,7 @@ char *mnemonic, count_t *count_sruct)
     arg = my_getnbr(after);
     for (unsigned int i = 0; i != 16; i++) {
         if (my_strstr(mnemonic, ARG[i].mnemonic) != NULL) {
-            count_sruct->byte += ARG[i].byte;
+            co->byte += ARG[i].byte;
             my_rev_bit((void *)&arg, ARG[i].byte);
             write(fd, &arg, ARG[i].byte);
             return (0);

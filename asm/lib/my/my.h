@@ -17,6 +17,8 @@ int my_get_char_nbr(char c);
 
 char *my_strdup(char const *src);
 
+void *my_memset(char *str, int c, int n);
+
 char *my_strstr(char const *str, char const *to_find);
 
 char *my_strupcase(char *str);

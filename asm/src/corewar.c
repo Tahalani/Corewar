@@ -10,41 +10,40 @@
 #include "option_asm.h"
 #include "op.h"
 
-char *loop_in_condition_option(int k, count_t *count_sruct, char *target, int *line)
+char *loop_in_condition_option(int k, count_t *co, char *target, int *line)
 {
-    char *count_byte= NULL;
+    char *count_byte = NULL;
     char *line_str = NULL;
 
-    if (k == 0 && count_sruct->check != 1) {
-        count_sruct->label_array[count_sruct->count_label] = target;
-        count_byte = int_to_str(count_sruct->byte);
+    if (k == 0 && co->check != 1) {
+        co->label_array[co->count_label] = target;
+        count_byte = int_to_str(co->byte);
         line_str = int_to_str(*line);
         if (count_byte[0] == '\0')
             count_byte[0] = '0';
         if (line_str[0] == '\0')
             line_str[0] = '0';
-        count_sruct->label_array[count_sruct->count_label + 1] = line_str;
-        count_sruct->label_array[count_sruct->count_label + 2]
+        co->label_array[co->count_label + 1] = line_str;
+        co->label_array[co->count_label + 2]
         = count_byte;
-        count_sruct->count_label += 3;
-        count_sruct->check = 1;
+        co->count_label += 3;
+        co->check = 1;
     }
     return (target);
 }
 
-int condition_handle_option(int count,
-int fd, char *target, count_t *count_sruct, int line, int k)
+int condition_handle_option(int count, int fd, char *target, count_t *co, int line, int k)
 {
     int return_value = 0;
 
     for (int i = 0; target[i] != '\0'; i++) {
-        target = loop_in_condition_option(k, count_sruct, target, &line);
+        target = loop_in_condition_option(k, co, target, &line);
         if (target[i] == LABEL_CHAR && (target[i + 1] == '\n' ||
         target[i + 1] == '\0'))
             return (-1);
     }
     if (my_strcmp(target, OPT_ARRAY[count]) == 0) {
-        return_value = (*OPT_FUNC[count]) (fd, count_sruct);
+        return_value = (*OPT_FUNC[count]) (fd, co);
         return (2);
     }
     return (return_value);
@@ -100,7 +99,7 @@ int yolotron_asm(char *path, char **av)
         if (loop_yolotron(array_line, fd, count_sruct, i) == 84)
             return (-1);
     }
-    write_label(fd, count_sruct, header);
+    write_label(fd, count_sruct);
     write_finally_prog_size(header, count_sruct, fd);
     return (0);
 }
